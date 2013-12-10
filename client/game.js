@@ -4,7 +4,6 @@ sprites = {
         Catedral: { sx: 0, sy: 500, w: 100, h: 100, frames: 1 },
         Posada: { sx: 200, sy: 400, w: 100, h: 100, frames: 1 },  
         Ccruce: { sx: 200, sy: 200, w: 100, h: 100, frames: 1 },   
-
         CiudadE: { sx: 300, sy: 0, w: 100, h: 100, frames: 1 },    
         Ciudad3lc: { sx: 600, sy: 0, w: 100, h: 100, frames: 1 },  
         Ciudad3lcE: { sx: 500, sy: 0, w: 100, h: 100, frames: 1 },     
@@ -24,7 +23,6 @@ sprites = {
         Ciudad1ll: { sx: 1000, sy: 100, w: 100, h:100, frames:1},
         Ciudad1l: { sx: 1000, sy: 300, w: 100, h: 100, frames:1},
         Tcruce: {sx: 1000, sy: 500, w: 100, h: 100, frames:1},
-
         
         ficha_rojo: { sx: 1152, sy: 0, w: 48, h: 48, frames: 1 },
         cura_rojo: { sx: 1200, sy: 0, w: 48, h: 48, frames: 1 },
@@ -80,20 +78,28 @@ img4.src = 'images/ControlHelp.png';
 
 
 
-
-
-
-Jugador1 = {nombre: "Carlos" , color: "ficha_rojo", puntos:0, turno:1};
-Jugador2 = {nombre: "Mario"  , color: "ficha_azul", puntos:10, turno: 0};
-Jugador3 = {nombre: "Maria"  , color: "ficha_amarillo", puntos:20, turno: 0};
-Jugador4 = {nombre: "Ana"    , color: "ficha_verde", puntos:30, turno: 0};
-Jugador5 = {nombre: "Niam"   , color: "ficha_gris", puntos:100, turno: 0};
-
 CurrentScroll = {x:70,y:70,active: true};
 
 CurrentMove = 0;
 CurrentTurn = 0;
 sonar = 1;
+
+
+
+function SetPlayers (err, data) {
+	Jugador1 = {nombre: data[0].nombre, color: "ficha_rojo", puntos: data[0].puntos, id: data[0].id, turno:1};
+	Jugador2 = {nombre: data[1].nombre  , color: "ficha_azul", puntos:data[1].puntos, id: data[1].id, turno: 0};
+	Jugador3 = {nombre: data[2].nombre  , color: "ficha_amarillo", puntos:data[2].puntos, id: data[2].id, turno: 0};
+	if (data.length >= 4) {
+		Jugador4 = {nombre: data[3].nombre    , color: "ficha_verde", puntos:data[3].puntos, id: data[3].id, turno: 0};
+	}
+	if (data.length == 5) {
+		Jugador5 = {nombre: data[4].nombre   , color: "ficha_gris", puntos:data[4].puntos, id: data[4].id, turno: 0};
+	}
+	nJugadores = data.length;
+	Game.initialize("game",sprites,startGame);
+}
+
 
 function getTurno () {
 	if (Jugador1.turno == 1) return Jugador1;
@@ -265,17 +271,14 @@ Ficha_abajo = function(cx,cy) {
     	if(up && Game.keys['sacar_ficha']) {
     		up = false;
     		if (CurrentMove == 0)  {
-
     			Meteor.call("Robar", function(err, data) { NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
-
 			
 				sonido_ladron.play();
 			
 			Game.setBoard(7, NuevaPieza);
-
-			CurrentMove = 1; console.log(data);
-			});
-
+			CurrentMove = 1; console.log(data);}
+			);
+			
 		} else if (CurrentMove == 1) {
 			Game.setBoard(8,new Set(NuevaPieza));
 			CurrentMove = 2;
@@ -774,8 +777,10 @@ Blank = new function () {
 	this.step = function() {};
 }
 
+
+
 $(function() {
-    Game.initialize("game",sprites,startGame);
-    Meteor.call("InicioJuego", function(err, data) { Lista = data; console.log(Lista); });
+    
+	Meteor.call("InicioJuego", SetPlayers);
 
 });

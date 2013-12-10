@@ -97,7 +97,7 @@ function SetPlayers (err, data) {
 		Jugador5 = {nombre: data[4].nombre   , color: "ficha_gris", puntos:data[4].puntos, id: data[4].id, turno: 0};
 	}
 	nJugadores = data.length;
-	Game.initialize("game",sprites,startGame);
+	Game.initialize(idCanvas.slice(1),sprites,startGame);
 }
 
 
@@ -417,7 +417,7 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 			}
 	
 			if (init == false) {
-				$('#game').mousedown(function(e){
+				$(idCanvas).mousedown(function(e){
 	          	  	if (that.colocada == false ) {
 	         
 						if (e.clientX > that.x && e.clientY > that.y && e.clientX < that.x + 100 && e.clientY < that.y + 100){
@@ -429,7 +429,7 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 					}
 				})
 		
-				$('#game').mouseup(function(e){
+				$(idCanvas).mouseup(function(e){
        		 	 // cuando mueves. soltar ficha en una casilla
                 	if (that.colocada == false ) {
 						that.x = Math.floor(e.clientX/100)* 100;
@@ -439,7 +439,7 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 				})
                
 
-				$('#game').mousemove(function(e){
+				$(idCanvas).mousemove(function(e){
              
 					if(!mouseIsDown) return;
    					if (that.colocada == false ) {
@@ -806,8 +806,19 @@ Blank = new function () {
 
 
 
-$(function() {
-    console.log(Meteor.userId());
+function initialize(idCanvasElement, sprite_url, callback, party_id) {
+	
+	Meteor.call("InicioJuego", party_id, SetPlayers);
+	idCanvas = idCanvasElement;
+	idParty = party_id;
+	urlSprite = sprite_url;
+	callback();
+
+}
+
+$(function () {
 	Meteor.call("InicioJuego", SetPlayers);
+	idCanvas = "#game";
+	urlSprite = 'images/sprites.png';
 
 });

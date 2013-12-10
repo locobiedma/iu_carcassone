@@ -174,7 +174,7 @@
 	this.map = spriteData;
 	this.image = new Image();
 	this.image.onload = callback;
-	this.image.src = 'images/sprites.png';
+	this.image.src = urlSprite;
     };
 
     

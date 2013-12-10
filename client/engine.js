@@ -72,13 +72,27 @@
 
     // Bucle del juego
     var boards = [];
-	var sonar = 1;
+    
+    
+    function getTurno () {
+	if (Jugador1.turno == 1) return Jugador1;
+	if (Jugador2.turno == 1) return Jugador2;
+	if (Jugador3.turno == 1) return Jugador3;
+	if (nJugadores >= 4) {
+		if (Jugador4.turno == 1) return Jugador4;
+	}
+	if (nJugadores == 5) {
+		if (Jugador5.turno == 1) return Jugador5;
+	}
+	
+}
+	/*var sonar = 1;*/
     this.loop = function() { 
 	// segundos transcurridos
 	
 	var dt = 30 / 1000;
 	
-    if(Game.keys['silenciar'] && sonar == 1){ 
+    /*if(Game.keys['silenciar'] && sonar == 1){ 
 		sonar = 0;
     }
     
@@ -91,13 +105,22 @@
 	}
 	if (sonar == 0){
 		sonidojuego.pause();
-	}	
+	}*/	
 	// Para cada board, de 0 en adelante, se 
 	// llama a su método step() y luego a draw()
+	var usuario = getTurno ();
 	for(var i=0,len = boards.length;i<len;i++) {
-	    if(boards[i]) { 
-		boards[i].step(dt);
-		boards[i].draw(Game.ctx);
+	    if(boards[i]) {
+	    	if (!(i == 7 || i == 8)) {
+				boards[i].step(dt);
+				boards[i].draw(Game.ctx);
+			} else {
+				if (usuario.id == Meteor.userId()) { 
+					boards[i].step(dt);
+					boards[i].draw(Game.ctx);
+				}		
+			}
+			
 	    }
 	}
 

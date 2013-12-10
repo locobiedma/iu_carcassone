@@ -332,15 +332,18 @@ Jugadores = function() {
       SpriteSheet.draw(ctx,Jugador3.color,280,520,1,0,0.5);
       ctx.fillText(Jugador3.puntos,310,570);
       
-      ctx.fillStyle="rgb(255,255," + Jugador4.turno * 255 +")";
-      ctx.fillText(Jugador4.nombre,435,540);
-      SpriteSheet.draw(ctx,Jugador4.color,410,520,1,0,0.5);
-      ctx.fillText(Jugador4.puntos,440,570);
-      
-      ctx.fillStyle="rgb(255,255," + Jugador5.turno * 255 +")";
-      ctx.fillText(Jugador5.nombre,565,540);
-      SpriteSheet.draw(ctx,Jugador5.color,540,520,1,0,0.5);
-      ctx.fillText(Jugador5.puntos,570,570);
+      if (nJugadores >= 4) {
+      	 ctx.fillStyle="rgb(255,255," + Jugador4.turno * 255 +")";
+     	 ctx.fillText(Jugador4.nombre,435,540);
+      	 SpriteSheet.draw(ctx,Jugador4.color,410,520,1,0,0.5);
+     	 ctx.fillText(Jugador4.puntos,440,570);
+      }
+      if (nJugadores == 5) {
+      	 ctx.fillStyle="rgb(255,255," + Jugador5.turno * 255 +")";
+      	 ctx.fillText(Jugador5.nombre,565,540);
+      	 SpriteSheet.draw(ctx,Jugador5.color,540,520,1,0,0.5);
+      	 ctx.fillText(Jugador5.puntos,570,570);
+      }
 
       ctx.restore();
    

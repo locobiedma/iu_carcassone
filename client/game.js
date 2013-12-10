@@ -87,7 +87,7 @@ sonar = 1;
 
 
 function SetPlayers (err, data) {
-	Jugador1 = {nombre: data[0].nombre, color: "ficha_rojo", puntos: data[0].puntos, id: data[0].id, turno:1};
+	Jugador1 = {nombre: data[0].nombre, color: "ficha_rojo", puntos: data[0].puntos, id: "DX6EHwZNZwLezftTz", turno:1};
 	Jugador2 = {nombre: data[1].nombre  , color: "ficha_azul", puntos:data[1].puntos, id: data[1].id, turno: 0};
 	Jugador3 = {nombre: data[2].nombre  , color: "ficha_amarillo", puntos:data[2].puntos, id: data[2].id, turno: 0};
 	if (data.length >= 4) {
@@ -291,16 +291,19 @@ Ficha_abajo = function(cx,cy) {
 	
     	if(up && Game.keys['sacar_ficha']) {
     		up = false;
-    		if (CurrentMove == 0)  {
-    			Meteor.call("Robar", function(err, data) { NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
+    		//console.log(Meteor.userId());
+    		if (CurrentMove == 0 && getTurno().id == Meteor.userId())  {
+    			
+    			Meteor.call("Robar", function(err, data) { 
+    					NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
 			
-				sonido_ladron.play();
+						sonido_ladron.play();
 			
-			Game.setBoard(7, NuevaPieza);
-			CurrentMove = 1; console.log(data);}
-			);
+						Game.setBoard(7, NuevaPieza);
+						CurrentMove = 1; console.log(data);
+					});
 			
-		} else if (CurrentMove == 1) {
+		} else if (CurrentMove == 1 && getTurno().id == Meteor.userId()) {
 			Game.setBoard(8,new Set(NuevaPieza));
 			CurrentMove = 2;
 		}
@@ -804,7 +807,7 @@ Blank = new function () {
 
 
 $(function() {
-    
+    console.log(Meteor.userId());
 	Meteor.call("InicioJuego", SetPlayers);
 
 });

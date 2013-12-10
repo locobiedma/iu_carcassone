@@ -4,6 +4,7 @@ sprites = {
         Catedral: { sx: 0, sy: 500, w: 100, h: 100, frames: 1 },
         Posada: { sx: 200, sy: 400, w: 100, h: 100, frames: 1 },  
         Ccruce: { sx: 200, sy: 200, w: 100, h: 100, frames: 1 },   
+
         CiudadE: { sx: 300, sy: 0, w: 100, h: 100, frames: 1 },    
         Ciudad3lc: { sx: 600, sy: 0, w: 100, h: 100, frames: 1 },  
         Ciudad3lcE: { sx: 500, sy: 0, w: 100, h: 100, frames: 1 },     
@@ -23,6 +24,7 @@ sprites = {
         Ciudad1ll: { sx: 1000, sy: 100, w: 100, h:100, frames:1},
         Ciudad1l: { sx: 1000, sy: 300, w: 100, h: 100, frames:1},
         Tcruce: {sx: 1000, sy: 500, w: 100, h: 100, frames:1},
+
         
         ficha_rojo: { sx: 1152, sy: 0, w: 48, h: 48, frames: 1 },
         cura_rojo: { sx: 1200, sy: 0, w: 48, h: 48, frames: 1 },
@@ -263,14 +265,17 @@ Ficha_abajo = function(cx,cy) {
     	if(up && Game.keys['sacar_ficha']) {
     		up = false;
     		if (CurrentMove == 0)  {
+
     			Meteor.call("Robar", function(err, data) { NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
+
 			
 				sonido_ladron.play();
 			
 			Game.setBoard(7, NuevaPieza);
-			CurrentMove = 1; console.log(data);}
-			);
-			
+
+			CurrentMove = 1; console.log(data);
+			});
+
 		} else if (CurrentMove == 1) {
 			Game.setBoard(8,new Set(NuevaPieza));
 			CurrentMove = 2;

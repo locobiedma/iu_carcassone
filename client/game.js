@@ -105,8 +105,12 @@ function getTurno () {
 	if (Jugador1.turno == 1) return Jugador1;
 	if (Jugador2.turno == 1) return Jugador2;
 	if (Jugador3.turno == 1) return Jugador3;
-	if (Jugador4.turno == 1) return Jugador4;
-	if (Jugador5.turno == 1) return Jugador5;
+	if (nJugadores >= 4) {
+		if (Jugador4.turno == 1) return Jugador4;
+	}
+	if (nJugadores == 5) {
+		if (Jugador5.turno == 1) return Jugador5;
+	}
 	
 }
 

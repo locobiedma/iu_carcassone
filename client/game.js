@@ -1,25 +1,28 @@
 sprites = {
         Rrecta: { sx: 0, sy: 0, w:100, h: 100, frames: 1 },
-        Rcurva: { sx: -200, sy: 400, w: 100, h: 100, frames: 1 },
-        Catedral: { sx: -200, sy: 500, w: 100, h: 100, frames: 1 },
-        Posada: { sx: 0, sy: 400, w: 100, h: 100, frames: 1 },
-        Ccruze: { sx: 0, sy: 200, w: 100, h: 100, frames: 1 },
-        CiudadE: { sx: 100, sy: 0, w: 100, h: 100, frames: 1 },
-        Ciudad3lc: { sx: 400, sy: 0, w: 100, h: 100, frames: 1 },
-        Ciudad3lcE: { sx: 300, sy: 0, w: 100, h: 100, frames: 1 },
-        Ciudad3l: { sx: 300, sy: 100, w: 100, h: 100, frames: 1 },
-        Ciudad3lE: { sx: 100, sy: 100, w: 100, h: 100, frames: 1 },
-        Ciudad2lc: { sx: 200, sy: 200, w: 100, h: 100, frames: 1 },
-        Ciudad2lcE: { sx: 100, sy: 200, w: 100, h: 100, frames: 1 },
-        Ciudad2l: { sx: 300, sy: 300, w: 100, h: 100, frames: 1 },
-        Ciudad2lE: { sx: 100, sy: 400, w: 100, h: 100, frames: 1 },
-        CiudadPuerta: { sx: 400, sy: 400, w: 100, h: 100, frames: 1 },
-        CiudadPuertaE: { sx: 300, sy: 400, w: 100, h: 100, frames: 1 },
-        Ciudadext: { sx: 300, sy: 500, w: 100, h: 100, frames: 1 },
-        Ciudad1l2crect: { sx: 500, sy: 0, w: 100, h: 100, frames: 1 },
-        Ciudadcurvder: { sx: 500, sy: 100, w: 100, h: 100, frames: 1 },
-        Ciudadcurvizq: { sx: 500, sy: 200, w: 100, h: 100, frames: 1 },
-        Ciudad1lcruze: { sx: 500, sy: 300, w: 100, h: 100, frames: 1 },
+        Rcurva: { sx: 0, sy: 400, w: 100, h: 100, frames: 1 },
+        Catedral: { sx: 0, sy: 500, w: 100, h: 100, frames: 1 },
+        Posada: { sx: 200, sy: 400, w: 100, h: 100, frames: 1 },  
+        Ccruce: { sx: 200, sy: 200, w: 100, h: 100, frames: 1 },   
+        CiudadE: { sx: 300, sy: 0, w: 100, h: 100, frames: 1 },    
+        Ciudad3lc: { sx: 600, sy: 0, w: 100, h: 100, frames: 1 },  
+        Ciudad3lcE: { sx: 500, sy: 0, w: 100, h: 100, frames: 1 },     
+        Ciudad3l: { sx: 500, sy: 100, w: 100, h: 100, frames: 1 },    
+        Ciudad3lE: { sx: 300, sy: 100, w: 100, h: 100, frames: 1 },
+        Ciudad2lc: { sx: 400, sy: 200, w: 100, h: 100, frames: 1 },   
+        Ciudad2lcE: { sx: 300, sy: 200, w: 100, h: 100, frames: 1 },
+        Ciudad2l: { sx: 400, sy: 300, w: 100, h: 100, frames: 1 },  
+        Ciudad2lE: { sx: 300, sy: 400, w: 100, h: 100, frames: 1 },  
+        CiudadPuerta: { sx: 600, sy: 400, w: 100, h: 100, frames: 1 },
+        CiudadPuertaE: { sx: 500, sy: 400, w: 100, h: 100, frames: 1 },  
+        Ciudadext: { sx: 500, sy: 500, w: 100, h: 100, frames: 1 },  
+        Ciudad1l2crect: { sx: 700, sy: 0, w: 100, h: 100, frames: 1 },  
+        Ciudadcurvder: { sx: 700, sy: 100, w: 100, h: 100, frames: 1 },  
+        Ciudadcurvizq: { sx: 700, sy: 200, w: 100, h: 100, frames: 1 },
+        Ciudad1lcruce: { sx: 700, sy: 300, w: 100, h: 100, frames: 1 },
+        Ciudad1ll: { sx: 1000, sy: 100, w: 100, h:100, frames:1},
+        Ciudad1l: { sx: 1000, sy: 300, w: 100, h: 100, frames:1},
+        Tcruce: {sx: 1000, sy: 500, w: 100, h: 100, frames:1},
         
         ficha_rojo: { sx: 1152, sy: 0, w: 48, h: 48, frames: 1 },
         cura_rojo: { sx: 1200, sy: 0, w: 48, h: 48, frames: 1 },
@@ -58,42 +61,62 @@ sprites = {
         ladron_rosa: { sx: 1344, sy: 240, w: 48, h: 48, frames: 1 },
 }
 
+
+
 var img = new Image();
 img.src = 'images/background.png';
 
 var img2 = new Image();
 img2.src = 'images/abajo.png';
 
+var img3 = new Image();
+img3.src = 'images/musica.png';
+
+var img4 = new Image();
+img4.src = 'images/ControlHelp.png';
+
+
+
+
+
+
 
 Jugador1 = {nombre: "Carlos" , color: "ficha_rojo", puntos:0, turno:1};
 Jugador2 = {nombre: "Mario"  , color: "ficha_azul", puntos:10, turno: 0};
 Jugador3 = {nombre: "Maria"  , color: "ficha_amarillo", puntos:20, turno: 0};
 Jugador4 = {nombre: "Ana"    , color: "ficha_verde", puntos:30, turno: 0};
+Jugador5 = {nombre: "Niam"   , color: "ficha_gris", puntos:100, turno: 0};
 
 CurrentScroll = {x:70,y:70,active: true};
 
 CurrentMove = 0;
 CurrentTurn = 0;
+sonar = 1;
 
 function getTurno () {
 	if (Jugador1.turno == 1) return Jugador1;
 	if (Jugador2.turno == 1) return Jugador2;
 	if (Jugador3.turno == 1) return Jugador3;
 	if (Jugador4.turno == 1) return Jugador4;
+	if (Jugador5.turno == 1) return Jugador5;
+	
 }
 
 function pasarTurno () {
 	if (Jugador1.turno == 1) { Jugador2.turno = 1; Jugador1.turno = 0;}
 	else if (Jugador2.turno == 1) { Jugador3.turno = 1; Jugador2.turno = 0;}
 	else if (Jugador3.turno == 1) { Jugador4.turno = 1; Jugador3.turno = 0;}
-	else if (Jugador4.turno == 1) { Jugador1.turno = 1; Jugador4.turno = 0;}
+	else if (Jugador4.turno == 1) { Jugador5.turno = 1; Jugador4.turno = 0;}
+	else if (Jugador5.turno == 1) { Jugador1.turno = 1; Jugador5.turno = 0;}
 	CurrentMove = 0;
 	CurrentTurn += 1;
 }
 
 
-
-startGame = function() {    
+//loader.init(); 
+startGame = function() {   
+	
+	
 	Game.setBoard(0,new Background());
 	Game.setBoard(1,new Jugadores());
 	Game.setBoard(2,new Rejilla()); 
@@ -104,7 +127,10 @@ startGame = function() {
 	
 	Game.setBoard(5,new Ficha_abajo());
 	Game.setBoard(9,new Helptext()); 
-	Game.setBoard(10, new Time());
+	Game.setBoard(10, new Time());	
+	Game.setBoard(11, new HelpScreen());
+
+	
 	
 };
 
@@ -116,7 +142,8 @@ Time = function () {
 		ctx.save();
 		ctx.fillStyle="rgb(255,255,255)";
 		ctx.font="bold 20px Arial";
-		ctx.fillText(this.tiempo,770,590);
+		ctx.fillText(this.tiempo,670,590);
+		//ctx.fillText2(this.tiempo,670,580);
 		ctx.restore();
 	}
 	
@@ -157,6 +184,10 @@ Helptext = function () {
 		ctx.save();
 		ctx.fillStyle="rgb(255,255,255)";
 		ctx.font="bold 15px Arial";
+		
+		if(sonar == 1){
+		      ctx.fillText("pulsa 'm' para silenciar y 'n' para volver a sonar", 250,465);  
+		}
 		
 		if (CurrentMove == 0) {
 			
@@ -204,28 +235,49 @@ Ficha_abajo = function(cx,cy) {
 	
 	
     this.draw = function(ctx) {
-    
 		ctx.drawImage(img2, 700, 500);
 	}
     	
-    var up = false;
-    var NuevaPieza;
-    this.step = function(dt) {
-    
-		if(!Game.keys['sacar_ficha']) up = true;
+	var up = false;
+	var NuevaPieza;
+	this.step = function(dt) {
+         /*if(!Game.keys['sonar']) sonar = true;
+        
+        if(sonar && Game.keys['sonar']) {
+                sonar = false;
+        }*/
+ 
+		 if(Game.keys['sonar']&& sonar == 0){
+		            console.log("doy a sonar");
+		            console.log(sonar);
+		            sonar = 1;
+		 }
+		 if(Game.keys['sonar']&&sonar == 1){
+		            console.log("doy a mutar");
+		            console.log(sonar);
+		            sonar = 0;
+		}
+        
+	if(!Game.keys['sacar_ficha']) up = true;
+	
     	if(up && Game.keys['sacar_ficha']) {
     		up = false;
     		if (CurrentMove == 0)  {
-				NuevaPieza = new PiezaMapa(CurrentScroll.x + 6,CurrentScroll.y + 5, "Ciudad3lE",90);
-				Game.setBoard(7, NuevaPieza);
-				CurrentMove = 1;
-			} else if (CurrentMove == 1) {
-				Game.setBoard(8,new Set(NuevaPieza));
-				CurrentMove = 2;
-			}
+    			Meteor.call("Robar", function(err, data) { NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
+			
+				sonido_ladron.play();
+			
+			Game.setBoard(7, NuevaPieza);
+			CurrentMove = 1; console.log(data);}
+			);
+			
+		} else if (CurrentMove == 1) {
+			Game.setBoard(8,new Set(NuevaPieza));
+			CurrentMove = 2;
 		}
-		
 	}
+		
+}
 };
 
 
@@ -255,6 +307,11 @@ Jugadores = function() {
       ctx.fillText(Jugador4.nombre,435,540);
       SpriteSheet.draw(ctx,Jugador4.color,410,520,1,0,0.5);
       ctx.fillText(Jugador4.puntos,440,570);
+      
+      ctx.fillStyle="rgb(255,255," + Jugador5.turno * 255 +")";
+      ctx.fillText(Jugador5.nombre,565,540);
+      SpriteSheet.draw(ctx,Jugador5.color,540,520,1,0,0.5);
+      ctx.fillText(Jugador5.puntos,570,570);
 
       ctx.restore();
    
@@ -362,12 +419,35 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 	}
 }  
 
-
+//Se encarga de pintar el fondo del juego
+HelpScreen = function() {
 	
+    this.enabled = false;
+    this.draw = function(ctx) {
+           if (this.enabled == true) {
+                ctx.save();
+                ctx.fillStyle = 'rgba(255,255,255,0.7)';
+                ctx.fillRect(140,90,520,320);
+                ctx.strokeStyle = "#ff9933";
+                ctx.strokeRect(140,90,520,320);
+                ctx.strokeRect(145,95,510,310);
+                ctx.drawImage(img4, 150, 100);  
+                ctx.restore();
+           }
+	};
+	
+		 var up = false;
+
+	this.step = function (dt) {
+    	if(!Game.keys['ayuda']) up = true;
+    	if(up && Game.keys['ayuda']) {
+         	up = false;
+         	this.enabled = !this.enabled;
+    	}
+	};
 
 
-
-
+};
 Seguidor = function (cx,cy, sprite, posx, posy) {
 	this.x = 100*cx;
 	this.y = 100*cy;
@@ -380,7 +460,9 @@ Seguidor = function (cx,cy, sprite, posx, posy) {
 		SpriteSheet.draw(ctx,this.sprite,this.x + this.posx,this.y + this.posy,1,0,0.5);
 	}
 	
-	this.step = function () { }
+	this.step = function () {
+	
+	}
 }
 
 
@@ -570,17 +652,41 @@ Set = function (PiezaMapa) {
 							var color = ficha_color.indexOf("_") + 1; 
 							return ficha_color.slice(color);
 						})(); 
-		if (this.option == 1){
-			return 'granjero_' + color;
-		} else if (this.option == 2){
-			return 'ladron_' + color;
-		} else if (this.option == 3){
-			return 'caballero_' + color;
-		} else if (this.option == 4){
-			return 'cura_' + color;
+		 if(Game.keys['sonar']&& sonar == 0){
+		           
+		            sonar = 1;
+		 }
+		 if(Game.keys['silenciar']&&sonar == 1){
+		            sonar = 0;
 		}
-		
-	
+        
+        if (sonar == 1){
+        
+			if (this.option == 1){
+					sonido_granjero.play();
+				return 'granjero_' + color;
+			} else if (this.option == 2){
+				sonido_ladron.play();
+				return 'ladron_' + color;
+			} else if (this.option == 3){
+				sonido_caballero.play();
+				return 'caballero_' + color;
+			} else if (this.option == 4){
+				sonido_monje.play();
+				return 'cura_' + color;
+			}
+		}else if (sonar == 0){
+			if (this.option == 1){
+				sonido_granjero.pause();
+				return 'granjero_' + color;
+			} else if (this.option == 2){
+				return 'ladron_' + color;
+			} else if (this.option == 3){
+				return 'caballero_' + color;
+			} else if (this.option == 4){
+				return 'cura_' + color;
+			}
+		}
 	}
 
 }
@@ -665,4 +771,6 @@ Blank = new function () {
 
 $(function() {
     Game.initialize("game",sprites,startGame);
+    Meteor.call("InicioJuego", function(err, data) { Lista = data; console.log(Lista); });
+
 });

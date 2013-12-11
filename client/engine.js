@@ -49,7 +49,7 @@
 
     // Gestión de la entrada (teclas para izda/derecha y disparo)
     var KEY_CODES = { 37:'left', 39:'right', 38 :'up', 40:'down', 32:'sacar_ficha', 
-    					27: 'back', 48:'rotar', 72: 'help', 77:'silenciar', 78:'sonar', 67:'ayuda'};
+    					27: 'back', 48:'rotar', 72: 'help', 77:'silenciar', 67:'ayuda'};
     this.keys = {};
 
     this.setupInput = function() {
@@ -72,26 +72,21 @@
 
     // Bucle del juego
     var boards = [];
-	/*var sonar = 1;*/
+	
     this.loop = function() { 
 	// segundos transcurridos
 	
 	var dt = 30 / 1000;
 	
-    /*if(Game.keys['silenciar'] && sonar == 1){ 
-		sonar = 0;
+    if(Game.keys['silenciar']){
+    	sonar = !sonar;
     }
-    
-    if(Game.keys['sonar'] && sonar == 0){
-     	sonar = 1;
-    }
-    
-    if (sonar == 1){
+	if(sonar == true){
 		sonidojuego.play();
-	}
-	if (sonar == 0){
+	}else{
 		sonidojuego.pause();
-	}*/	
+	}
+	
 	// Para cada board, de 0 en adelante, se 
 	// llama a su método step() y luego a draw()
 	for(var i=0,len = boards.length;i<len;i++) {

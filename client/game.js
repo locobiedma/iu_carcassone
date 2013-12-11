@@ -69,8 +69,8 @@ img.src = 'images/background.png';
 var img2 = new Image();
 img2.src = 'images/abajo.png';
 
-var img3 = new Image();
-img3.src = 'images/musica.png';
+//var img3 = new Image();
+//img3.src = 'images/musica.png';
 
 var img4 = new Image();
 img4.src = 'images/ControlHelp.png';
@@ -82,12 +82,12 @@ CurrentScroll = {x:70,y:70,active: true};
 
 CurrentMove = 0;
 CurrentTurn = 0;
-sonar = 1;
+sonar = true;
 
 
 
 function SetPlayers (err, data) {
-	Jugador1 = {nombre: data[0].nombre, color: "ficha_rojo", puntos: data[0].puntos, id: "DX6EHwZNZwLezftTz", turno:1};
+	Jugador1 = {nombre: data[0].nombre, color: "ficha_rojo", puntos: data[0].puntos, id: data[0].id, turno:1};
 	Jugador2 = {nombre: data[1].nombre  , color: "ficha_azul", puntos:data[1].puntos, id: data[1].id, turno: 0};
 	Jugador3 = {nombre: data[2].nombre  , color: "ficha_amarillo", puntos:data[2].puntos, id: data[2].id, turno: 0};
 	if (data.length >= 4) {
@@ -214,9 +214,8 @@ Helptext = function () {
 		ctx.fillStyle="rgb(255,255,255)";
 		ctx.font="bold 15px Arial";
 		
-		if(sonar == 1){
-		      ctx.fillText("pulsa 'm' para silenciar y 'n' para volver a sonar", 250,465);  
-		}
+		
+		ctx.fillText("pulsa 'm' para activar o desactivar sonido", 250,465);  
 		
 		if (CurrentMove == 0) {
 			
@@ -276,7 +275,7 @@ Ficha_abajo = function(cx,cy) {
                 sonar = false;
         }*/
  
-		 if(Game.keys['sonar']&& sonar == 0){
+		 /*if(Game.keys['sonar']&& sonar == 0){
 		            console.log("doy a sonar");
 		            console.log(sonar);
 		            sonar = 1;
@@ -286,7 +285,7 @@ Ficha_abajo = function(cx,cy) {
 		            console.log(sonar);
 		            sonar = 0;
 		}
-        
+        */
 	if(!Game.keys['sacar_ficha']) up = true;
 	
     	if(up && Game.keys['sacar_ficha']) {
@@ -687,15 +686,17 @@ Set = function (PiezaMapa) {
 							var color = ficha_color.indexOf("_") + 1; 
 							return ficha_color.slice(color);
 						})(); 
-		 if(Game.keys['sonar']&& sonar == 0){
+		/*
+		 if(Game.keys['silenciar']) sonar = true;
 		           
-		            sonar = 1;
-		 }
-		 if(Game.keys['silenciar']&&sonar == 1){
-		            sonar = 0;
+		            //sonar = 1;
+		 //}
+		 if(sonar && Game.keys['silenciar']){
+		 			sonar=false;
+		            //sonar = 0;
 		}
-        
-        if (sonar == 1){
+        */
+        //if (sonar){
         
 			if (this.option == 1){
 					sonido_granjero.play();
@@ -710,7 +711,7 @@ Set = function (PiezaMapa) {
 				sonido_monje.play();
 				return 'cura_' + color;
 			}
-		}else if (sonar == 0){
+		/*}else if (!sonar){
 			if (this.option == 1){
 				sonido_granjero.pause();
 				return 'granjero_' + color;
@@ -721,7 +722,7 @@ Set = function (PiezaMapa) {
 			} else if (this.option == 4){
 				return 'cura_' + color;
 			}
-		}
+		}*/
 	}
 
 }

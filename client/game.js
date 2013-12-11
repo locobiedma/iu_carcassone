@@ -119,14 +119,14 @@ function pasarTurno () {
 	if (nJugadores == 3) {
 		if (Jugador1.turno == 1) { Jugador2.turno = 1; Jugador1.turno = 0;}
 		else if (Jugador2.turno == 1) { Jugador3.turno = 1; Jugador2.turno = 0;}
-		else if (Jugador3.turno == 1) { Jugador4.turno = 1; Jugador3.turno = 0;}
+		else if (Jugador3.turno == 1) { Jugador1.turno = 1; Jugador3.turno = 0;}
 	}
 	
 	if (nJugadores == 4) {
 		if (Jugador1.turno == 1) { Jugador2.turno = 1; Jugador1.turno = 0;}
 		else if (Jugador2.turno == 1) { Jugador3.turno = 1; Jugador2.turno = 0;}
 		else if (Jugador3.turno == 1) { Jugador4.turno = 1; Jugador3.turno = 0;}
-		else if (Jugador4.turno == 1) { Jugador5.turno = 1; Jugador4.turno = 0;}
+		else if (Jugador4.turno == 1) { Jugador1.turno = 1; Jugador4.turno = 0;}
 	}
 	
 	if (nJugadores == 5) {

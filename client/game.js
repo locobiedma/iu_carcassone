@@ -539,7 +539,16 @@ Set = function (PiezaMapa) {
 			//ctx.fillRect(370+50*this.optionx,195+50*this.optiony,50,50);
 			
 			ctx.fillText("Colocar seguidor",350,160);
-			SpriteSheet.draw(ctx,this.pieza.sprite,420,195,1,this.pieza.rotation,1.5);
+			if (this.pieza.rotation == 0) {
+                		SpriteSheet.draw(ctx,this.pieza.sprite,370,195,1,this.pieza.rotation,1.5);
+            		} else if (this.pieza.rotation == -90) {
+                		SpriteSheet.draw(ctx,this.pieza.sprite,370,245,1,this.pieza.rotation,1.5);
+            		} else if (this.pieza.rotation == -180) {
+                		SpriteSheet.draw(ctx,this.pieza.sprite,420,245,1,this.pieza.rotation,1.5);
+            		} else if (this.pieza.rotation == -270) {
+                		SpriteSheet.draw(ctx,this.pieza.sprite,420,195,1,this.pieza.rotation,1.5);
+            		}
+			//SpriteSheet.draw(ctx,this.pieza.sprite,420,195,1,this.pieza.rotation,1.5);
 			ctx.font="bold 20px Arial";
 			for(var y=0; y<3; y=y+1){
 				for(var x=0; x<3; x=x+1){

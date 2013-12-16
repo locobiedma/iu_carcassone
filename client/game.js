@@ -69,8 +69,8 @@ img.src = 'images/background.png';
 var img2 = new Image();
 img2.src = 'images/abajo.png';
 
-var img3 = new Image();
-img3.src = 'images/musica.png';
+//var img3 = new Image();
+//img3.src = 'images/musica.png';
 
 var img4 = new Image();
 img4.src = 'images/ControlHelp.png';
@@ -82,7 +82,7 @@ CurrentScroll = {x:70,y:70,active: true};
 
 CurrentMove = 0;
 CurrentTurn = 0;
-sonar = 1;
+sonar = true;
 
 function traducirSeguidor (x,y) {
 	if (x == 0 && y == 0) { return 7; } 
@@ -158,14 +158,15 @@ function SetFichaEn (NuevaPieza, Posiciones) {
 
 
 function SetPlayers (err, data) {
-	Jugador1 = {nombre: data[0].nombre.slice(0,5), color: "ficha_rojo", puntos: data[0].puntos, id: "B4bQQGsnptkoxZTK4", turno:1};
-	Jugador2 = {nombre: data[1].nombre.slice(0,5)  , color: "ficha_azul", puntos:data[1].puntos, id: "B4bQQGsnptkoxZTK4", turno: 0};
-	Jugador3 = {nombre: data[2].nombre.slice(0,5)  , color: "ficha_amarillo", puntos:data[2].puntos, id: "B4bQQGsnptkoxZTK4", turno: 0};
+
+	Jugador1 = {nombre: data[0].nombre.slice(0,4), color: "ficha_rojo", puntos: data[0].puntos, id:data[0].id, turno:1};
+	Jugador2 = {nombre: data[1].nombre.slice(0,4) , color: "ficha_azul", puntos:data[1].puntos, id: data[1].id, turno: 0};
+	Jugador3 = {nombre: data[2].nombre.slice(0,4)  , color: "ficha_amarillo", puntos:data[2].puntos, id: data[2].id, turno: 0};
 	if (data.length >= 4) {
-		Jugador4 = {nombre: data[3].nombre.slice(0,5)    , color: "ficha_verde", puntos:data[3].puntos, id: "B4bQQGsnptkoxZTK4", turno: 0};
+		Jugador4 = {nombre: data[3].nombre.slice(0,4)    , color: "ficha_verde", puntos:data[3].puntos, id: data[3].id, turno: 0};
 	}
 	if (data.length == 5) {
-		Jugador5 = {nombre: data[4].nombre.slice(0,5)   , color: "ficha_gris", puntos:data[4].puntos, id: "B4bQQGsnptkoxZTK4", turno: 0};
+		Jugador5 = {nombre: data[4].nombre.slice(0,4)  , color: "ficha_gris", puntos:data[4].puntos, id: data[4].id, turno: 0};
 	}
 	nJugadores = data.length;
 	Game.initialize(idCanvas.slice(1),sprites,startGame);
@@ -285,9 +286,8 @@ Helptext = function () {
 		ctx.fillStyle="rgb(255,255,255)";
 		ctx.font="bold 15px Arial";
 		
-		if(sonar == 1){
-		      ctx.fillText("pulsa 'm' para silenciar y 'n' para volver a sonar", 250,465);  
-		}
+		
+		ctx.fillText("pulsa 'm' para activar o desactivar sonido", 250,465);  
 		
 		if (CurrentMove == 0) {
 			
@@ -337,27 +337,13 @@ Ficha_abajo = function(cx,cy) {
     this.draw = function(ctx) {
 		ctx.drawImage(img2, 700, 500);
 	}
-    	
+    var sonido = true;
 	var up = false;
 	var NuevaPieza;
 	this.step = function(dt) {
-         /*if(!Game.keys['sonar']) sonar = true;
-        
-        if(sonar && Game.keys['sonar']) {
-                sonar = false;
-        }*/
- 
-		 if(Game.keys['sonar']&& sonar == 0){
-		            console.log("doy a sonar");
-		            console.log(sonar);
-		            sonar = 1;
-		 }
-		 if(Game.keys['sonar']&&sonar == 1){
-		            console.log("doy a mutar");
-		            console.log(sonar);
-		            sonar = 0;
-		}
-        
+    if(Game.keys['silenciar']){
+    	sonido = !sonido;
+   	}
 	if(!Game.keys['sacar_ficha']) up = true;
 	
     	if(up && Game.keys['sacar_ficha']) {
@@ -368,14 +354,14 @@ Ficha_abajo = function(cx,cy) {
     			Meteor.call("Robar", function(err, data) { 
     				NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
 			
-				sonido_ladron.play();
+						sonido_ladron.play();
 			
-				Game.setBoard(7, NuevaPieza);
-				CurrentMove = 1; 
-				Posiciones = data[1];
-				console.log(data);
+						Game.setBoard(7, NuevaPieza);
+						CurrentMove = 1; 
+						Posiciones = data[1];
+						console.log(data);
 			});
-			
+
 		} else if (CurrentMove == 1 && getTurno().id == Meteor.userId()) {
 			if (SetFichaEn(NuevaPieza, Posiciones)) {
 				Meteor.call("ColocarFicha", idParty, NuevaPieza.sprite, {x: NuevaPieza.x/100 + CurrentScroll.x, y: NuevaPieza.y/100 +CurrentScroll.y}, (NuevaPieza.rotation / -90), function(err, data) { 
@@ -796,16 +782,10 @@ Set = function (PiezaMapa) {
 							var color = ficha_color.indexOf("_") + 1; 
 							return ficha_color.slice(color);
 						})(); 
-		 if(Game.keys['sonar']&& sonar == 0){
-		           
-		            sonar = 1;
-		 }
-		 if(Game.keys['silenciar']&&sonar == 1){
-		            sonar = 0;
-		}
-        
-        if (sonar == 1){
-        
+		if(Game.keys['silenciar']){
+    		sonar = !sonar;
+   		}
+        if (sonar){
 			if (this.option == 1){
 					sonido_granjero.play();
 				return 'granjero_' + color;
@@ -819,7 +799,7 @@ Set = function (PiezaMapa) {
 				sonido_monje.play();
 				return 'cura_' + color;
 			}
-		}else if (sonar == 0){
+		}else if (!sonar){
 			if (this.option == 1){
 				sonido_granjero.pause();
 				return 'granjero_' + color;
@@ -930,6 +910,7 @@ ClarcassonneGameIU = new function ()  {
 $(function () {
 	console.log(Meteor.userId());
 	Meteor.call("InicioJuego", SetPlayers);
+	console.log(Meteor.userId());
 	idCanvas = "#game";
 	idParty = "pacoparty";
 	urlSprite = 'images/sprites.png';

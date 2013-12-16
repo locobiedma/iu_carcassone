@@ -87,14 +87,14 @@ sonar = true;
 
 
 function SetPlayers (err, data) {
-	Jugador1 = {nombre: data[0].nombre.slice(1,5), color: "ficha_rojo", puntos: data[0].puntos, id: data[0].id, turno:1};
-	Jugador2 = {nombre: data[1].nombre.slice(1,5) , color: "ficha_azul", puntos:data[1].puntos, id: data[1].id, turno: 0};
-	Jugador3 = {nombre: data[2].nombre.slice(1,5)  , color: "ficha_amarillo", puntos:data[2].puntos, id: data[2].id, turno: 0};
+	Jugador1 = {nombre: data[0].nombre.slice(0,4), color: "ficha_rojo", puntos: data[0].puntos, id:data[0].id, turno:1};
+	Jugador2 = {nombre: data[1].nombre.slice(0,4) , color: "ficha_azul", puntos:data[1].puntos, id: data[1].id, turno: 0};
+	Jugador3 = {nombre: data[2].nombre.slice(0,4)  , color: "ficha_amarillo", puntos:data[2].puntos, id: data[2].id, turno: 0};
 	if (data.length >= 4) {
-		Jugador4 = {nombre: data[3].nombre.slice(1,5)    , color: "ficha_verde", puntos:data[3].puntos, id: data[3].id, turno: 0};
+		Jugador4 = {nombre: data[3].nombre.slice(0,4)    , color: "ficha_verde", puntos:data[3].puntos, id: data[3].id, turno: 0};
 	}
 	if (data.length == 5) {
-		Jugador5 = {nombre: data[4].nombre.slice(1,5)  , color: "ficha_gris", puntos:data[4].puntos, id: data[4].id, turno: 0};
+		Jugador5 = {nombre: data[4].nombre.slice(0,4)  , color: "ficha_gris", puntos:data[4].puntos, id: data[4].id, turno: 0};
 	}
 	nJugadores = data.length;
 	Game.initialize(idCanvas.slice(1),sprites,startGame);
@@ -265,12 +265,12 @@ Ficha_abajo = function(cx,cy) {
     this.draw = function(ctx) {
 		ctx.drawImage(img2, 700, 500);
 	}
-    	
+    var sonido = true;
 	var up = false;
 	var NuevaPieza;
 	this.step = function(dt) {
     if(Game.keys['silenciar']){
-    	sonar = !sonar;
+    	sonido = !sonido;
    	}
 	if(!Game.keys['sacar_ficha']) up = true;
 	
@@ -281,7 +281,7 @@ Ficha_abajo = function(cx,cy) {
     			
     			Meteor.call("Robar", function(err, data) { 
     					NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
-						if (sonar){
+						if (sonido){
 							sonido_ficha.play();
 						}
 						Game.setBoard(7, NuevaPieza);
@@ -806,6 +806,7 @@ function initialize(idCanvasElement, sprite_url, callback, party_id) {
 
 $(function () {
 	Meteor.call("InicioJuego", SetPlayers);
+	console.log(Meteor.userId());
 	idCanvas = "#game";
 	urlSprite = 'images/sprites.png';
 

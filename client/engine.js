@@ -81,7 +81,7 @@
     if(Game.keys['silenciar']){
     	sonar = !sonar;
     }
-	if(sonar == true){
+	if(sonar){
 		sonidojuego.play();
 	}else{
 		sonidojuego.pause();

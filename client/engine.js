@@ -53,19 +53,28 @@
     this.keys = {};
 
     this.setupInput = function() {
-	$(window).keydown(function(event){
-	    if (KEY_CODES[event.which]) {
-		Game.keys[KEY_CODES[event.which]] = true;
-		return false;
-	    }
-	});
-	
-	$(window).keyup(function(event){
-	    if (KEY_CODES[event.which]) {
-		Game.keys[KEY_CODES[event.which]] = false;
-		return false;
-	    }
-	});
+	$(window).click(function(event){
+          if (event.target.id == "game")
+            focusCanvas = true;
+          else
+            focusCanvas = false;
+        });
+
+        $(window).keydown(function(event){
+          if (focusCanvas)
+         if (KEY_CODES[event.which]) {
+                Game.keys[KEY_CODES[event.which]] = true;
+                return false;
+         }
+        });
+        
+        $(window).keyup(function(event){
+          if (focusCanvas)
+         if (KEY_CODES[event.which]) {
+                Game.keys[KEY_CODES[event.which]] = false;
+                return false;
+         }
+        });
 	
     }
 

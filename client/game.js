@@ -87,14 +87,14 @@ sonar = true;
 
 
 function SetPlayers (err, data) {
-	Jugador1 = {nombre: data[0].nombre, color: "ficha_rojo", puntos: data[0].puntos, id: data[0].id, turno:1};
-	Jugador2 = {nombre: data[1].nombre  , color: "ficha_azul", puntos:data[1].puntos, id: data[1].id, turno: 0};
-	Jugador3 = {nombre: data[2].nombre  , color: "ficha_amarillo", puntos:data[2].puntos, id: data[2].id, turno: 0};
+	Jugador1 = {nombre: data[0].nombre.slice(1,5), color: "ficha_rojo", puntos: data[0].puntos, id: data[0].id, turno:1};
+	Jugador2 = {nombre: data[1].nombre.slice(1,5) , color: "ficha_azul", puntos:data[1].puntos, id: data[1].id, turno: 0};
+	Jugador3 = {nombre: data[2].nombre.slice(1,5)  , color: "ficha_amarillo", puntos:data[2].puntos, id: data[2].id, turno: 0};
 	if (data.length >= 4) {
-		Jugador4 = {nombre: data[3].nombre    , color: "ficha_verde", puntos:data[3].puntos, id: data[3].id, turno: 0};
+		Jugador4 = {nombre: data[3].nombre.slice(1,5)    , color: "ficha_verde", puntos:data[3].puntos, id: data[3].id, turno: 0};
 	}
 	if (data.length == 5) {
-		Jugador5 = {nombre: data[4].nombre   , color: "ficha_gris", puntos:data[4].puntos, id: data[4].id, turno: 0};
+		Jugador5 = {nombre: data[4].nombre.slice(1,5)  , color: "ficha_gris", puntos:data[4].puntos, id: data[4].id, turno: 0};
 	}
 	nJugadores = data.length;
 	Game.initialize(idCanvas.slice(1),sprites,startGame);
@@ -269,23 +269,9 @@ Ficha_abajo = function(cx,cy) {
 	var up = false;
 	var NuevaPieza;
 	this.step = function(dt) {
-         /*if(!Game.keys['sonar']) sonar = true;
-        
-        if(sonar && Game.keys['sonar']) {
-                sonar = false;
-        }*/
- 
-		 /*if(Game.keys['sonar']&& sonar == 0){
-		            console.log("doy a sonar");
-		            console.log(sonar);
-		            sonar = 1;
-		 }
-		 if(Game.keys['sonar']&&sonar == 1){
-		            console.log("doy a mutar");
-		            console.log(sonar);
-		            sonar = 0;
-		}
-        */
+    if(Game.keys['silenciar']){
+    	sonar = !sonar;
+   	}
 	if(!Game.keys['sacar_ficha']) up = true;
 	
     	if(up && Game.keys['sacar_ficha']) {
@@ -295,9 +281,9 @@ Ficha_abajo = function(cx,cy) {
     			
     			Meteor.call("Robar", function(err, data) { 
     					NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
-			
-						sonido_ladron.play();
-			
+						if (sonar){
+							sonido_ficha.play();
+						}
 						Game.setBoard(7, NuevaPieza);
 						CurrentMove = 1; console.log(data);
 					});
@@ -686,18 +672,10 @@ Set = function (PiezaMapa) {
 							var color = ficha_color.indexOf("_") + 1; 
 							return ficha_color.slice(color);
 						})(); 
-		/*
-		 if(Game.keys['silenciar']) sonar = true;
-		           
-		            //sonar = 1;
-		 //}
-		 if(sonar && Game.keys['silenciar']){
-		 			sonar=false;
-		            //sonar = 0;
-		}
-        */
-        //if (sonar){
-        
+		if(Game.keys['silenciar']){
+    		sonar = !sonar;
+   		}
+        if (sonar){
 			if (this.option == 1){
 					sonido_granjero.play();
 				return 'granjero_' + color;
@@ -711,7 +689,7 @@ Set = function (PiezaMapa) {
 				sonido_monje.play();
 				return 'cura_' + color;
 			}
-		/*}else if (!sonar){
+		}else if (!sonar){
 			if (this.option == 1){
 				sonido_granjero.pause();
 				return 'granjero_' + color;
@@ -722,7 +700,7 @@ Set = function (PiezaMapa) {
 			} else if (this.option == 4){
 				return 'cura_' + color;
 			}
-		}*/
+		}
 	}
 
 }

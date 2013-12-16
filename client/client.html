@@ -4,6 +4,13 @@
 
 <body>
 	{{ loginButtons }}
+	
+	{{> clark}}
+ 	
+</body>
+
+
+	<template name="clark">
 	<div id='container'>
     	<canvas id='game' width='800' height='600'></canvas>
     	<audio id="sonidojuego">
@@ -24,8 +31,5 @@
    		<audio id="sonido_ficha">
    			<source src=audio/GONG4.ogg" type = "audio/ogg"/>
    		</audio>
- 	</div>
-</body>
-
-
-
+   		</div>
+   	</template>

@@ -1,0 +1,3 @@
+
+//ClarcassonneGameIU.initialize("game", "paco");
+

@@ -1,3 +1,2 @@
-
-//ClarcassonneGameIU.initialize("game", "paco");
+//ClarcassonneGameIU.initialize('#game', "paco");
 

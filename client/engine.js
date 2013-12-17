@@ -51,10 +51,12 @@
     var KEY_CODES = { 37:'left', 39:'right', 38 :'up', 40:'down', 32:'sacar_ficha', 
     					27: 'back', 48:'rotar', 72: 'help', 77:'silenciar', 67:'ayuda'};
     this.keys = {};
-
+    
+	
     this.setupInput = function() {
+    var focusCanvas = true;
 	$(window).click(function(event){
-          if (event.target.id == "game")
+          if (event.target.id == idCanvas.slice(1))
             focusCanvas = true;
           else
             focusCanvas = false;
@@ -178,7 +180,7 @@
 	this.map = spriteData;
 	this.image = new Image();
 	this.image.onload = callback;
-	this.image.src = urlSprite;
+	this.image.src = 'images/sprites.png';
     };
 
     

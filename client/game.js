@@ -178,15 +178,17 @@ function SetPlayers (err, data) {
 		var last = Partidas.find({_id:idParty}).collection.docs[idParty].movimientos;
 		if (last != undefined) {
 			var ultimo = last.pop();
+			if (ultimo.ficha != 0) {
 			NP = new PiezaMapa(ultimo.ficha.x,ultimo.ficha.y, ultimo.ficha.sprite,ultimo.ficha.rotation);
 			NP.colocada = true;
 			Tablero.add(NP);
+			}
 			if (ultimo.seguidor != 0) {
 				Tablero.add(new Seguidor (ultimo.seguidor.fx,ultimo.seguidor.fy,ultimo.seguidor.t,ultimo.seguidor.sx,ultimo.seguidor.sy));
 			}
 			console.log(ultimo);
+			pasarTurno();
 		}
-		
 		
 	});
 
@@ -274,7 +276,12 @@ Time = function () {
 
 		if (this.tiempo == 0) {
 			this.tiempo = 60;
-			pasarTurno();
+			//pasarTurno();
+			Partidas.update(idParty, {
+                            $push : {movimientos: {jugador: getTurno(), ficha: 0, seguidor: 0}}
+           });
+            Session.set("turno", CurrentTurn+1);
+			
 			turno = CurrentTurn;
 			Game.setBoard(7, Blank);
 			Game.setBoard(8, Blank);
@@ -730,7 +737,7 @@ Set = function (PiezaMapa) {
                           });
                           Session.set("turno", CurrentTurn+1);
 						
-						pasarTurno();
+						//pasarTurno();
 			
 
 					
@@ -795,7 +802,7 @@ Set = function (PiezaMapa) {
 						Game.setBoard(8,Blank);
 						Game.setBoard(7, Blank);
 						CurrentScroll.active = true;
-						pasarTurno();
+						//pasarTurno();
 					
 					});
 					

@@ -172,10 +172,19 @@ function SetPlayers (err, data) {
 	
 	Meteor.subscribe("partidas", idParty);
 	
+	var u = Partidas.findOne({_id:idParty})
+	console.log(u);
+	if (u.movimientos) {
+		console.log(u.movimientos.pop().jugador);
+		setTurno(u.movimientos.pop().jugador);
+	
+	}
+	
 	Deps.autorun(function(){
-		var turno = Session.get("turno");
-		console.log (Partidas.find ({_id:idParty}));
-		var last = Partidas.find({_id:idParty}).collection.docs[idParty].movimientos;
+		
+		
+		console.log (Partidas.findOne({_id:idParty}));
+		var last = Partidas.findOne({_id:idParty}).movimientos;
 		if (last != undefined) {
 			var ultimo = last.pop();
 			if (ultimo.ficha != 0) {
@@ -207,6 +216,32 @@ function getTurno () {
 		if (Jugador5.turno == 1) return Jugador5;
 	}
 	
+}
+
+function setTurno (jugador) {
+
+	if (nJugadores == 3) {
+		if (Jugador1.id == jugador.id) { getTurno().turno = 0; Jugador2.turno = 1; }
+		if (Jugador2.id == jugador.id) { getTurno().turno = 0; Jugador3.turno = 1; }
+		if (Jugador3.id == jugador.id) { getTurno().turno = 0; Jugador1.turno = 1; }
+
+	}
+	if (nJugadores == 4) {
+		if (Jugador1.id == jugador.id) { getTurno().turno = 0; Jugador2.turno = 1; }
+		if (Jugador2.id == jugador.id) { getTurno().turno = 0; Jugador3.turno = 1; }
+		if (Jugador3.id == jugador.id) { getTurno().turno = 0; Jugador4.turno = 1; }
+		if (Jugador4.id == jugador.id) { getTurno().turno = 0; Jugador1.turno = 1; }
+
+	}
+	if (nJugadores == 5) {
+		if (Jugador1.id == jugador.id) { getTurno().turno = 0; Jugador2.turno = 1; }
+		if (Jugador2.id == jugador.id) { getTurno().turno = 0; Jugador3.turno = 1; }
+		if (Jugador3.id == jugador.id) { getTurno().turno = 0; Jugador4.turno = 1; }
+		if (Jugador4.id == jugador.id) { getTurno().turno = 0; Jugador5.turno = 1; }
+		if (Jugador5.id == jugador.id) { getTurno().turno = 0; Jugador1.turno = 1; }
+	}
+	
+
 }
 
 function pasarTurno () {
@@ -280,7 +315,7 @@ Time = function () {
 			Partidas.update(idParty, {
                             $push : {movimientos: {jugador: getTurno(), ficha: 0, seguidor: 0}}
            });
-            Session.set("turno", CurrentTurn+1);
+            //Session.set("turno", CurrentTurn+1);
 			
 			turno = CurrentTurn;
 			Game.setBoard(7, Blank);
@@ -382,7 +417,7 @@ Ficha_abajo = function(cx,cy) {
     			Meteor.call("Robar", function(err, data) { 
     				NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
 			
-						sonido_ladron.play();
+						//sonido_ladron.play();
 			
 						Game.setBoard(7, NuevaPieza);
 						CurrentMove = 1; 

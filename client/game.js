@@ -190,7 +190,7 @@ function SetPlayers (err, data) {
 		
 		}
 	
-	}
+	} 
 	
 	
 	
@@ -801,6 +801,7 @@ Set = function (PiezaMapa) {
 						Partidas.update(idParty, {
                             $push : {movimientos: {jugador: getTurno(), ficha: {x: that.pieza.x/100 + CurrentScroll.x, y: that.pieza.y/100 +CurrentScroll.y, sprite: that.pieza.sprite, rotation: that.pieza.rotation}, seguidor: 0}}
                           });
+                          	console.log(data);
                           	setPoint (data);
                           //Session.set("turno", CurrentTurn+1);
 						

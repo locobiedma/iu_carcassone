@@ -6,11 +6,11 @@
 
        	Tablero.iniciar();
 
-	Tablero.listaJugadores.push(new ObjetoJugador("mbAAv2Hj6eN2FRZm2","Paco",23));
-        Tablero.listaJugadores.push(new ObjetoJugador("uvyMsfBzdmgdoDHmu","Pepe",88));
-        Tablero.listaJugadores.push(new ObjetoJugador("mbAAv2Hj6eN2FRZm2","Mengano",34));
-        Tablero.listaJugadores.push(new ObjetoJugador("uvyMsfBzdmgdoDHmu","Fulano",17));
-        Tablero.listaJugadores.push(new ObjetoJugador("mbAAv2Hj6eN2FRZm2","Zutano",12));
+	Tablero.listaJugadores.push(new ObjetoJugador("bv5cWqMSRbBd7hxk3","Paco",23));
+        Tablero.listaJugadores.push(new ObjetoJugador("cWtsjBQ4cjtQPDjfy","Pepe",88));
+        Tablero.listaJugadores.push(new ObjetoJugador("bv5cWqMSRbBd7hxk3","Mengano",34));
+        Tablero.listaJugadores.push(new ObjetoJugador("cWtsjBQ4cjtQPDjfy","Fulano",17));
+        Tablero.listaJugadores.push(new ObjetoJugador("bv5cWqMSRbBd7hxk3","Zutano",12));
         //ordenamos a los jugadores por edad
         Tablero.listaJugadores=_.sortBy(Tablero.listaJugadores, function(jugador){ return jugador.edad; });
        
@@ -51,19 +51,21 @@
     
     ColocarSeguidor:function(id_partida, id_jugador, coordenada, seguidor){
     
+    var ficha= Tablero.buscarxcoor(coordenada.x,coordenada.y);
       if (seguidor){
       
               var Jugador = _.find(Tablero.listaJugadores,function(obj){return (obj.id == id_jugador)})
-              var ficha= Tablero.buscarxcoor(coordenada.x,coordenada.y);
+              
               var nuevoSeguidor = {t:seguidor.t, n:seguidor.n, j:Jugador.numero, f:ficha}
       }
-      if (ficha.seguidores.push(nuevoSeguidor) || seguidor==0) {
+      	
         Tablero.cierraCamino(ficha,1);
         Tablero.cierraClaustro(ficha,1);
         Tablero.cierraCastillo(ficha,1);
+        console.log(Tablero.listaJugadores);
         return Tablero.listaJugadores;
       
-      } else {return 0}
+      
       
     }
     //Coloca el seguidor en la ficha indicada y suma los correspondientes puntos. Acaba el turno. 

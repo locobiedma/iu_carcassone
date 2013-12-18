@@ -219,6 +219,23 @@ function SetPlayers (err, data) {
 }
 
 
+
+function setPoint (data) {
+	Jugador1.puntos = data[0].puntos;
+	Jugador2.puntos = data[1].puntos;
+	Jugador3.puntos = data[2].puntos;
+	if (nJugadores >= 4) {
+		Jugador4.puntos = data[3].puntos;
+	}
+	if (nJugadores == 5) {
+		Jugador5.puntos = data[4].puntos;
+	}
+
+
+
+}
+
+
 function getTurno () {
 	if (Jugador1.turno == 1) return Jugador1;
 	if (Jugador2.turno == 1) return Jugador2;
@@ -784,6 +801,7 @@ Set = function (PiezaMapa) {
 						Partidas.update(idParty, {
                             $push : {movimientos: {jugador: getTurno(), ficha: {x: that.pieza.x/100 + CurrentScroll.x, y: that.pieza.y/100 +CurrentScroll.y, sprite: that.pieza.sprite, rotation: that.pieza.rotation}, seguidor: 0}}
                           });
+                          	setPoint (data);
                           //Session.set("turno", CurrentTurn+1);
 						
 						//pasarTurno();
@@ -851,6 +869,7 @@ Set = function (PiezaMapa) {
 						Game.setBoard(8,Blank);
 						Game.setBoard(7, Blank);
 						CurrentScroll.active = true;
+						setPoint (data);
 						//pasarTurno();
 					
 					});
@@ -1001,7 +1020,7 @@ $(function () {
 	idParty = "paco";
 	urlSprite = 'images/sprites.png';
 	Meteor.subscribe("partidas", idParty);
-	//Partidas.remove({_id: idParty});
+	Partidas.remove({_id: idParty});
 	Partidas.insert({_id: idParty});
 	
 	

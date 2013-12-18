@@ -177,8 +177,22 @@ function SetPlayers (err, data) {
 	if (u.movimientos) {
 		console.log(u.movimientos.pop().jugador);
 		setTurno(u.movimientos.pop().jugador);
+		
+		for (moves in u.movimientos) {
+			if (u.movimientos[moves].ficha != 0) {
+				NP = new PiezaMapa(u.movimientos[moves].ficha.x,u.movimientos[moves].ficha.y, u.movimientos[moves].ficha.sprite,u.movimientos[moves].ficha.rotation);
+				NP.colocada = true;
+				Tablero.add(NP);
+			}
+			if (u.movimientos[moves].seguidor != 0) {
+				Tablero.add(new Seguidor (u.movimientos[moves].seguidor.fx, u.movimientos[moves].seguidor.fy,u.movimientos[moves].seguidor.t,u.movimientos[moves].seguidor.sx,u.movimientos[moves].seguidor.sy));
+			}
+		
+		}
 	
 	}
+	
+	
 	
 	Deps.autorun(function(){
 		
@@ -770,7 +784,7 @@ Set = function (PiezaMapa) {
 						Partidas.update(idParty, {
                             $push : {movimientos: {jugador: getTurno(), ficha: {x: that.pieza.x/100 + CurrentScroll.x, y: that.pieza.y/100 +CurrentScroll.y, sprite: that.pieza.sprite, rotation: that.pieza.rotation}, seguidor: 0}}
                           });
-                          Session.set("turno", CurrentTurn+1);
+                          //Session.set("turno", CurrentTurn+1);
 						
 						//pasarTurno();
 			
@@ -833,7 +847,7 @@ Set = function (PiezaMapa) {
 						Partidas.update(idParty, {
                             $push : {movimientos: {jugador: getTurno(), ficha: {x: that.pieza.x/100 + CurrentScroll.x, y: that.pieza.y/100 +CurrentScroll.y, sprite: that.pieza.sprite, rotation: that.pieza.rotation}, seguidor: {fx: that.pieza.x/100 , fy: that.pieza.y/100,t: that.setSeguidorType(),sx:that.optionx,sy:that.optiony}}}
                           });
-                         Session.set("turno", CurrentTurn+1);
+                         //Session.set("turno", CurrentTurn+1);
 						Game.setBoard(8,Blank);
 						Game.setBoard(7, Blank);
 						CurrentScroll.active = true;
@@ -987,7 +1001,7 @@ $(function () {
 	idParty = "paco";
 	urlSprite = 'images/sprites.png';
 	Meteor.subscribe("partidas", idParty);
-	Partidas.remove({_id: idParty});
+	//Partidas.remove({_id: idParty});
 	Partidas.insert({_id: idParty});
 	
 	

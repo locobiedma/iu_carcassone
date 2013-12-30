@@ -187,6 +187,7 @@ function SetPlayers (err, data) {
 			if (u.movimientos[moves].seguidor != 0) {
 				Tablero.add(new Seguidor (u.movimientos[moves].seguidor.fx, u.movimientos[moves].seguidor.fy,u.movimientos[moves].seguidor.t,u.movimientos[moves].seguidor.sx,u.movimientos[moves].seguidor.sy));
 			}
+			setPoint (u.movimientos[moves].puntos);
 		
 		}
 	
@@ -209,6 +210,7 @@ function SetPlayers (err, data) {
 			if (ultimo.seguidor != 0) {
 				Tablero.add(new Seguidor (ultimo.seguidor.fx,ultimo.seguidor.fy,ultimo.seguidor.t,ultimo.seguidor.sx,ultimo.seguidor.sy));
 			}
+			setPoint (ultimo.puntos);
 			console.log(ultimo);
 			pasarTurno();
 		}
@@ -454,15 +456,18 @@ Ficha_abajo = function(cx,cy) {
 						CurrentMove = 1; 
 						Posiciones = data[1];
 						console.log(data);
+						Game.setBoard(6, new Highlight(data[1]));
 			});
 
 		} else if (CurrentMove == 1 && getTurno().id == Meteor.userId()) {
 			if (SetFichaEn(NuevaPieza, Posiciones)) {
 				Meteor.call("ColocarFicha", idParty, NuevaPieza.sprite, {x: NuevaPieza.x/100 + CurrentScroll.x, y: NuevaPieza.y/100 +CurrentScroll.y}, (NuevaPieza.rotation / -90), function(err, data) { 
-    				Game.setBoard(8,new Set(NuevaPieza));
-					CurrentMove = 2;
-					PosicionesSeg = data;
-					console.log(data);
+					if (data != 0) {
+    					Game.setBoard(8,new Set(NuevaPieza));
+						CurrentMove = 2;
+						PosicionesSeg = data;
+						console.log(data);
+					}
 					
 				});
 			}
@@ -474,6 +479,24 @@ Ficha_abajo = function(cx,cy) {
 }
 };
 
+
+Highlight = function (positions) {
+	this.position = positions;
+
+	this.draw = function(ctx) {
+		if (CurrentMove == 1) {
+			ctx.save();
+            ctx.fillStyle = 'rgba(255,255,255,0.5)';
+			for (i in this.position) {
+            	ctx.fillRect((this.position[i].x - CurrentScroll.x) * 100,(this.position[i].y-CurrentScroll.y) * 100 ,100,100);
+            }
+            ctx.restore();
+        }
+	};
+	this.step= function(dt) {};
+
+
+}
 
 
 Jugadores = function() {  
@@ -799,10 +822,14 @@ Set = function (PiezaMapa) {
 						Game.setBoard(7, Blank);
 						CurrentScroll.active = true;
 						Partidas.update(idParty, {
-                            $push : {movimientos: {jugador: getTurno(), ficha: {x: that.pieza.x/100 + CurrentScroll.x, y: that.pieza.y/100 +CurrentScroll.y, sprite: that.pieza.sprite, rotation: that.pieza.rotation}, seguidor: 0}}
+                            $push : {movimientos: {jugador: getTurno(), ficha: {x: that.pieza.x/100 + CurrentScroll.x, y: that.pieza.y/100 +CurrentScroll.y, sprite: that.pieza.sprite, rotation: that.pieza.rotation}, seguidor: 0, puntos: data}}
                           });
                           	console.log(data);
-                          	setPoint (data);
+                          	
+                          	$(idCanvas).unbind("mousedown");
+                          	$(idCanvas).unbind("mouseup");
+                          	$(idCanvas).unbind("mousemove");
+                          	
                           //Session.set("turno", CurrentTurn+1);
 						
 						//pasarTurno();
@@ -864,13 +891,16 @@ Set = function (PiezaMapa) {
 						//Tablero.add(that.pieza);
 						//Tablero.add(new Seguidor (that.pieza.x/100,that.pieza.y/100,that.setSeguidorType(),that.optionx,that.optiony));
 						Partidas.update(idParty, {
-                            $push : {movimientos: {jugador: getTurno(), ficha: {x: that.pieza.x/100 + CurrentScroll.x, y: that.pieza.y/100 +CurrentScroll.y, sprite: that.pieza.sprite, rotation: that.pieza.rotation}, seguidor: {fx: that.pieza.x/100 , fy: that.pieza.y/100,t: that.setSeguidorType(),sx:that.optionx,sy:that.optiony}}}
+                            $push : {movimientos: {jugador: getTurno(), ficha: {x: that.pieza.x/100 + CurrentScroll.x, y: that.pieza.y/100 +CurrentScroll.y, sprite: that.pieza.sprite, rotation: that.pieza.rotation}, seguidor: {fx: that.pieza.x/100 , fy: that.pieza.y/100,t: that.setSeguidorType(),sx:that.optionx,sy:that.optiony}, puntos: data}}
                           });
                          //Session.set("turno", CurrentTurn+1);
 						Game.setBoard(8,Blank);
 						Game.setBoard(7, Blank);
 						CurrentScroll.active = true;
-						setPoint (data);
+						
+						$(idCanvas).unbind("mousedown");
+                          	$(idCanvas).unbind("mouseup");
+                          	$(idCanvas).unbind("mousemove");
 						//pasarTurno();
 					
 					});

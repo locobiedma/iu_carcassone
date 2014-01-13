@@ -345,8 +345,15 @@ Time = function () {
 		if (this.tiempo == 0) {
 			this.tiempo = 60;
 			//pasarTurno();
+			if (nJugadores == 3) {
+				var parray = [Jugador1, Jugador2, Jugador3];  
+			} else if (nJugadores == 4) {
+				var parray = [Jugador1, Jugador2, Jugador3, Jugador4];  
+			} else if (nJugadores == 5) { 
+				var parray = [Jugador1, Jugador2, Jugador3, Jugador4, Jugador5];  
+			}
 			Partidas.update(idParty, {
-                            $push : {movimientos: {jugador: getTurno(), ficha: 0, seguidor: 0}}
+                            $push : {movimientos: {jugador: getTurno(), ficha: 0, seguidor: 0, puntos: parray}}
            });
             //Session.set("turno", CurrentTurn+1);
 			
@@ -447,11 +454,11 @@ Ficha_abajo = function(cx,cy) {
     		//console.log(Meteor.userId());
     		if (CurrentMove == 0 && getTurno().id == Meteor.userId())  {
     			
-    			Meteor.call("Robar", function(err, data) { 
+    			Meteor.call("Robar", idParty, function(err, data) { 
     				NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
 			
 						//sonido_ladron.play();
-			
+						if (data[1].length != 0)
 						Game.setBoard(7, NuevaPieza);
 						CurrentMove = 1; 
 						Posiciones = data[1];

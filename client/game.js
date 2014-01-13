@@ -458,12 +458,13 @@ Ficha_abajo = function(cx,cy) {
     				NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
 			
 						//sonido_ladron.play();
-						if (data[1].length != 0)
+						//if (data[1].length != 0 || ) {
 						Game.setBoard(7, NuevaPieza);
 						CurrentMove = 1; 
 						Posiciones = data[1];
 						console.log(data);
 						Game.setBoard(6, new Highlight(data[1]));
+						 
 			});
 
 		} else if (CurrentMove == 1 && getTurno().id == Meteor.userId()) {
@@ -477,6 +478,8 @@ Ficha_abajo = function(cx,cy) {
 					}
 					
 				});
+			} else {
+				alert("No puedes colocar la ficha ahí");
 			}
 		
 			

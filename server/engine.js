@@ -25,9 +25,7 @@ Tiposfichas = {
 		Tcruce:   {Izq: "Rue", Der: "Rue", Arr: "Campo", Abaj: "Rue", Escudo: 0},//4
 };
 
-fichas = [ //72
-		  'Rrecta', 'Rcurva', 'Catedral',  'Posada', 'Ccruce', 'CiudadE', 'Ciudad3lc', 'Ciudad3lcE', 'Ciudad3l', 'Ciudad3lE', 'Ciudad2lc', 'Ciudad2lcE', 'Ciudad2l', 'Ciudad2lE', 'CiudadPuerta', 'CiudadPuertaE', 'Ciudadext', 'Ciudad1l2crect', 'Ciudadcurvder', 'Ciudadcurvizq','Ciudad1lcruce', 'Ciudad1ll', 'Ciudad1l', 'Tcruce',
-];
+
 
 Tablero = new function(){
 
@@ -35,6 +33,10 @@ Tablero = new function(){
 	this.iniciar = function(){
 	  console.log("LLAMAMOS A INICIAR");
     this.totalFichas = 72;
+
+this.fichas = [ //72
+		  'Rrecta', 'Rcurva', 'Catedral',  'Posada', 'Ccruce', 'CiudadE', 'Ciudad3lc', 'Ciudad3lcE', 'Ciudad3l', 'Ciudad3lE', 'Ciudad2lc', 'Ciudad2lcE', 'Ciudad2l', 'Ciudad2lE', 'CiudadPuerta', 'CiudadPuertaE', 'Ciudadext', 'Ciudad1l2crect', 'Ciudadcurvder', 'Ciudadcurvizq','Ciudad1lcruce', 'Ciudad1ll', 'Ciudad1l', 'Tcruce',
+];
 
 	  this.n_fichas = { //72 
 			Rrecta: 8, Rcurva: 9, Catedral: 4, Posada: 2, Ccruce : 1, CiudadE: 1, Ciudad3lc: 1, Ciudad3lcE: 2, Ciudad3l:  3, Ciudad3lE: 1, Ciudad2lc: 3, Ciudad2lcE:  2, Ciudad2l: 3, Ciudad2lE: 2, CiudadPuerta: 1, CiudadPuertaE: 2, Ciudadext: 3, Ciudad1l2crect: 4, Ciudadcurvder: 3, Ciudadcurvizq:3, Ciudad1lcruce: 3, Ciudad1ll: 2,  Ciudad1l: 5, Tcruce: 4,
@@ -150,12 +152,12 @@ Tablero = new function(){
     this.robarFicha = function(){
         if(this.totalFichas == 0){return -1}
 				else if (this.totalFichas == 72) { var n_rand=17}
-				else {var n_rand = Math.floor(Math.random() *fichas.length);}
-        var rand = fichas[n_rand];
+				else {var n_rand = Math.floor(Math.random() * this.fichas.length);}
+        var rand = this.fichas[n_rand];
   //      console.log("ficha robada: ",rand);
   //      console.log("numero de esa ficha: ",this.n_fichas[rand]);
         this.n_fichas[rand] = this.n_fichas[rand]-1;
-		if (this.n_fichas[rand] == 0){fichas.splice(n_rand,1)}
+		if (this.n_fichas[rand] == 0){this.fichas.splice(n_rand,1)}
   //      console.log("numero de esa ficha actual: ",this.n_fichas[rand]);
         this.totalFichas--;
   //      console.log("Total de fichas: ",this.totalFichas);
@@ -223,6 +225,8 @@ Tablero = new function(){
 				else if (fichatierra.lleno){tienecab3 = cierraCastillo(fichatierra);}
 				else if (!fichatierra.lleno){tienecab3 =[false,false]}
 
+console.log("Tenemos caballeros: ",tienecab0," | ",tienecab1," | ",tienecab2," | ",tienecab3);
+
 		for (var i=0;i<=8;i++){
 
 			if (i==0){
@@ -241,7 +245,13 @@ Tablero = new function(){
 					if (ciudadunlado.indexOf(ficha.tipo) != -1){ // Si la ficha es una ciudad de un lado.
 						if (tienecab0[1] == false){seguidor.push({t:"Caballero",n:i});} 
 					}else{
-						if(tienecab0[1] == false && tienecab1[1] == false && tienecab2[1] == false && tienecab3[1] == false){
+						var auxbool= false;
+						if(tienecab0[1] == true && ficha.arriba == "Tierra"){var auxbool= true}
+						if(tienecab1[1] == true && ficha.derecha == "Tierra"){var auxbool= true}
+						if(tienecab2[1] == true && ficha.abajo == "Tierra"){var auxbool= true}
+						if(tienecab3[1] == true && ficha.izda == "Tierra"){var auxbool= true}
+
+						if(auxbool == false){
 							seguidor.push({t:"Caballero",n:i});
 						}			
 					}
@@ -276,7 +286,13 @@ Tablero = new function(){
 					if (ciudadunlado.indexOf(ficha.tipo) != -1){ // Si la ficha es una ciudad de un lado.
 						if (tienecab1[1] == false){seguidor.push({t:"Caballero",n:i});} 
 					}else{
-						if(tienecab0[1] == false && tienecab1[1] == false && tienecab2[1] == false && tienecab3[1] == false){
+						var auxbool= false;
+						if(tienecab0[1] == true && ficha.arriba == "Tierra"){var auxbool= true}
+						if(tienecab1[1] == true && ficha.derecha == "Tierra"){var auxbool= true}
+						if(tienecab2[1] == true && ficha.abajo == "Tierra"){var auxbool= true}
+						if(tienecab3[1] == true && ficha.izda == "Tierra"){var auxbool= true}
+
+						if(auxbool == false){
 							seguidor.push({t:"Caballero",n:i});
 						}			
 					}	
@@ -308,7 +324,13 @@ Tablero = new function(){
 					if (ciudadunlado.indexOf(ficha.tipo) != -1){ // Si la ficha es una ciudad de un lado.
 						if (tienecab2[1] == false){seguidor.push({t:"Caballero",n:i});} 
 					}else{
-						if(tienecab0[1] == false && tienecab1[1] == false && tienecab2[1] == false && tienecab3[1] == false){
+						var auxbool= false;
+						if(tienecab0[1] == true && ficha.arriba == "Tierra"){var auxbool= true}
+						if(tienecab1[1] == true && ficha.derecha == "Tierra"){var auxbool= true}
+						if(tienecab2[1] == true && ficha.abajo == "Tierra"){var auxbool= true}
+						if(tienecab3[1] == true && ficha.izda == "Tierra"){var auxbool= true}
+
+						if(auxbool == false){
 							seguidor.push({t:"Caballero",n:i});
 						}			
 					}								
@@ -340,9 +362,15 @@ Tablero = new function(){
 					if (ciudadunlado.indexOf(ficha.tipo) != -1){ // Si la ficha es una ciudad de un lado.
 						if (tienecab3[1] == false){seguidor.push({t:"Caballero",n:i});} 
 					}else{
-						if(tienecab0[1] == false && tienecab1[1] == false && tienecab2[1] == false && tienecab3[1] == false){
+						var auxbool= false;
+						if(tienecab0[1] == true && ficha.arriba == "Tierra"){var auxbool= true}
+						if(tienecab1[1] == true && ficha.derecha == "Tierra"){var auxbool= true}
+						if(tienecab2[1] == true && ficha.abajo == "Tierra"){var auxbool= true}
+						if(tienecab3[1] == true && ficha.izda == "Tierra"){var auxbool= true}
+
+						if(auxbool == false){
 							seguidor.push({t:"Caballero",n:i});
-						}			
+						}				
 					}		
 				}else if(ficha.izda == "Campo"){
 					tienegranj = puntosGranja(ficha,0,6);
@@ -359,10 +387,8 @@ Tablero = new function(){
 				}
 			}
 			if (i==8){
-				if(ficha.abajo == "Rue" && ficha.izda == "Campo" && ficha.derecha == "Campo" && ficha.arriba == "Campo"){
+				if(ficha.tipo == "Posada" || ficha.tipo == "Catedral"){
 					seguidor.push({t:"Monje",n:i});			
-				}else if(ficha.abajo == "Campo" && ficha.izda == "Campo" && ficha.derecha == "Campo" && ficha.arriba == "Campo"){			
-					seguidor.push({t:"Monje",n:i});	
 				}
 			}	
 		}

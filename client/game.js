@@ -498,8 +498,12 @@ Highlight = function (positions) {
 			ctx.save();
             ctx.fillStyle = 'rgba(255,255,255,0.5)';
 			for (i in this.position) {
-            	ctx.fillRect((this.position[i].x - CurrentScroll.x) * 100,(this.position[i].y-CurrentScroll.y) * 100 ,100,100);
-            }
+		if (this.position[i].y-CurrentScroll.y < 5) {
+            	        ctx.fillRect((this.position[i].x - CurrentScroll.x) * 100,(this.position[i].y-CurrentScroll.y) * 100 ,100,100);
+            	 }
+            	
+               }
+            
             ctx.restore();
         }
 	};

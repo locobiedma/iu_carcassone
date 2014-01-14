@@ -475,6 +475,9 @@ Ficha_abajo = function(cx,cy) {
 						CurrentMove = 2;
 						PosicionesSeg = data;
 						console.log(data);
+					
+					}else{
+					        alert("Rota la ficha para colocarla");
 					}
 					
 				});

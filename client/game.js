@@ -125,8 +125,8 @@ function SetSeguidorEn (Seguidor, Posiciones) {
 	for (pos in Posiciones) {
 
 		posible = Seguidortraducir (Posiciones[pos].n);
-
-		if (posible.x == Seguidor.x && posible.y == Seguidor.y) {
+		console.log(traducirTipoSeguidor(Seguidor.t), Posiciones[pos].t);
+		if (posible.x == Seguidor.x && posible.y == Seguidor.y && traducirTipoSeguidor(Seguidor.t) ==  Posiciones[pos].t) {
 			encaja = true;	
 		}
  	}
@@ -614,7 +614,7 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 			if (init == false) {
 				$(idCanvas).mousedown(function(e){
 	          	  	if (that.colocada == false ) {
-	         
+	         				
 						if (e.clientX > that.x && e.clientY > that.y && e.clientX < that.x + 100 && e.clientY < that.y + 100){
 							posicion_x = e.clientX - that.x;
 							posicion_y = e.clientY - that.y;
@@ -892,7 +892,7 @@ Set = function (PiezaMapa) {
 			if(up3 && Game.keys['sacar_ficha']) {
 				up3 = false;
 				// Coloco la ficha en el mapa en la posicion optionx,optiony
-				if (SetSeguidorEn ( {x: this.optionx, y: this.optiony, t: console.log(this.option)}, PosicionesSeg)) {
+				if (SetSeguidorEn ( {x: this.optionx, y: this.optiony, t: this.option}, PosicionesSeg)) {
 				
 					Meteor.call("ColocarSeguidor", idParty, getTurno().id, {x: this.pieza.x/100 + CurrentScroll.x, y: this.pieza.y/100 + CurrentScroll.y}, {t:traducirTipoSeguidor (this.option) ,n: traducirSeguidor (this.optionx,this.optiony)}, function(err, data) {
 					
@@ -909,8 +909,8 @@ Set = function (PiezaMapa) {
 						CurrentScroll.active = true;
 						
 						$(idCanvas).unbind("mousedown");
-                          	$(idCanvas).unbind("mouseup");
-                          	$(idCanvas).unbind("mousemove");
+                          			$(idCanvas).unbind("mouseup");
+                          			$(idCanvas).unbind("mousemove");
 						//pasarTurno();
 					
 					});

@@ -6,11 +6,11 @@
 
        	Tablero.iniciar();
 
-	Tablero.listaJugadores.push(new ObjetoJugador("wqTY5kyksgpXEffC3","Paco",23));
-        Tablero.listaJugadores.push(new ObjetoJugador("wqTY5kyksgpXEffC3","Pepe",88));
-        Tablero.listaJugadores.push(new ObjetoJugador("wqTY5kyksgpXEffC3","Mengano",34));
-        Tablero.listaJugadores.push(new ObjetoJugador("wqTY5kyksgpXEffC3","Fulano",17));
-        Tablero.listaJugadores.push(new ObjetoJugador("wqTY5kyksgpXEffC3","Zutano",12));
+	Tablero.listaJugadores.push(new ObjetoJugador("mbAAv2Hj6eN2FRZm2","Paco",23));
+        Tablero.listaJugadores.push(new ObjetoJugador("mbAAv2Hj6eN2FRZm2","Pepe",88));
+        Tablero.listaJugadores.push(new ObjetoJugador("mbAAv2Hj6eN2FRZm2","Mengano",34));
+        Tablero.listaJugadores.push(new ObjetoJugador("mbAAv2Hj6eN2FRZm2","Fulano",17));
+        Tablero.listaJugadores.push(new ObjetoJugador("mbAAv2Hj6eN2FRZm2","Zutano",12));
         //ordenamos a los jugadores por edad
         Tablero.listaJugadores=_.sortBy(Tablero.listaJugadores, function(jugador){ return jugador.edad; });
        

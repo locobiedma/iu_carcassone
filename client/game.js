@@ -623,12 +623,12 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 					console.log(e);
 	          	  	if (that.colocada == false ) {
 	         				
-						if ((e.clientX - e.currentTarget.offsetLeft) > that.x &&
-							 (e.clientY - e.currentTarget.offsetTop) > that.y &&
-							 (e.clientX - e.currentTarget.offsetLeft) < that.x + 100 &&
-							 (e.clientY - e.currentTarget.offsetTop) < that.y + 100){
-							posicion_x = (e.clientX - e.currentTarget.offsetLeft) - that.x;
-							posicion_y = (e.clientY - e.currentTarget.offsetTop) - that.y;
+						if ((e.pageX - e.currentTarget.offsetLeft) > that.x &&
+							 (e.pageY - e.currentTarget.offsetTop) > that.y &&
+							 (e.pageX - e.currentTarget.offsetLeft) < that.x + 100 &&
+							 (e.pageY - e.currentTarget.offsetTop) < that.y + 100){
+							posicion_x = (e.pageX - e.currentTarget.offsetLeft) - that.x;
+							posicion_y = (e.pageY - e.currentTarget.offsetTop) - that.y;
 	                  
 							mouseIsDown = true;
 						}
@@ -638,8 +638,8 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 				$(idCanvas).mouseup(function(e){
        		 	 // cuando mueves. soltar ficha en una casilla
                 	if (that.colocada == false ) {
-						that.x = Math.floor((e.clientX - e.currentTarget.offsetLeft)/100)* 100;
-						that.y = Math.floor((e.clientY- e.currentTarget.offsetTop)/100)* 100;
+						that.x = Math.floor((e.pageX - e.currentTarget.offsetLeft)/100)* 100;
+						that.y = Math.floor((e.pageY- e.currentTarget.offsetTop)/100)* 100;
 					}
 					mouseIsDown = false;
 				})
@@ -649,8 +649,8 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
              
 					if(!mouseIsDown) return;
    					if (that.colocada == false ) {
-						that.x = (e.clientX - e.currentTarget.offsetLeft) - posicion_x;
-						that.y = (e.clientY - e.currentTarget.offsetTop) - posicion_y;
+						that.x = (e.pageX - e.currentTarget.offsetLeft) - posicion_x;
+						that.y = (e.pageY - e.currentTarget.offsetTop) - posicion_y;
                 	}
 					return false;
 				})
@@ -1064,9 +1064,26 @@ ClarcassonneGameIU = new function ()  {
 	
 }
 
+function sleep(miliseconds) {
+	var start = new Date().getTime();
+	for (var i = 0; i < 1e7; i++) {
+		if ((new Date().getTime() - start) > miliseconds) {
+			break;
+		}
+	}
+}
 
 $(function () {
 	console.log(Meteor.userId());
+	var cnvs = document.getElementById("game");
+	var cnvsctx = cnvs.getContext && cnvs.getContext('2d');
+	if(!cnvsctx) { return alert("Please upgrade your browser to play"); }
+	cnvsctx.save();
+	cnvsctx.fillRect(0,0,800,600);
+	cnvsctx.fillStyle="rgb(255,255,255)";
+	cnvsctx.font="bold 50px Arial";
+	cnvsctx.fillText("Loading...", 270,355);  
+	cnvsctx.restore();
 	Meteor.call("InicioJuego", SetPlayers);
 	idCanvas = "#game";
 	idParty = "paco";

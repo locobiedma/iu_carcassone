@@ -1,5 +1,11 @@
 <head>
 	<title>iu_carcassone</title>
+	<script src="audio/audiojs/audio.min.js"></script>
+	<script>
+  		audiojs.events.ready(function() {
+    		var as = audiojs.createAll();
+  		});
+	</script>
 </head>
 
 <body>
@@ -18,8 +24,8 @@
     	</audio>
     	<audio id="sonido_ladron">
     		<source src="audio/ladron.ogg" type="audio/ogg"/>
-   		</audio>
-   		<audio id = "sonido_granjero">
+   	</audio>
+   	<audio id = "sonido_granjero">
    			<source src="audio/Gallo.ogg" type="audio/ogg"/>
    		</audio>
    		<audio id= "sonido_caballero">

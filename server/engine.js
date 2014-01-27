@@ -27,11 +27,11 @@ Tiposfichas = {
 
 
 
-Tablero = new function(){
+ObjTablero = function(id_partida){
 
-
+	this.id=id_partida;
 	this.iniciar = function(){
-	  console.log("LLAMAMOS A INICIAR");
+	 
     this.totalFichas = 72;
 
 this.fichas = [ //72
@@ -47,8 +47,6 @@ this.fichas = [ //72
     
     
 	  var i=0;
-	  this.huecos=[];
-	  this.candidatos=[];
 	  for(var x=0;x<140;x++){        //de 10 a 10 para probar (144)
 		  for(var y=0;y<140;y++){
 			  this.huecos.push( new ObjetoFicha(x,y,i));
@@ -410,11 +408,11 @@ ObjetoJugador = function(user_id,nombre,fecha,n_jugador){
   this.n_seguidores = 7;
 	this.nombre = nombre;
 	this.id=user_id;
-	this.edad = fecha;/*function(fecha){
-									var dia= fecha.split('/');
-									var birthday = +new Date(dia[2],dia[1],dia[0]);
-									console.log("ccc",birthday);
-									return ~~((Date.now() - birthday) / (31557600000)); // 24*3600*365.25*1000
+	this.edad = fecha; /*function(fecha){
+		var dia= fecha.split('/');
+		var birthday = +new Date(dia[2],dia[1],dia[0]);
+		console.log("ccc",birthday);
+		return ~~((Date.now() - birthday) / (31557600000)); // 24*3600*365.25*1000
 	}(fecha);*/
 	this.puntos = 0;
 	

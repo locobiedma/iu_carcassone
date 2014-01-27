@@ -159,7 +159,7 @@ function SetFichaEn (NuevaPieza, Posiciones) {
 LastData = undefined;
 
 function SetPlayers (err, data) {
-
+	console.log(data);
 	Jugador1 = {nombre: data[0].nombre.slice(0,6), color: "ficha_rojo", puntos: data[0].puntos, id:data[0].id, turno:1};
 	Jugador2 = {nombre: data[1].nombre.slice(0,6) , color: "ficha_azul", puntos:data[1].puntos, id: data[1].id, turno: 0};
 	Jugador3 = {nombre: data[2].nombre.slice(0,6)  , color: "ficha_amarillo", puntos:data[2].puntos, id: data[2].id, turno: 0};
@@ -447,10 +447,24 @@ Ficha_abajo = function(cx,cy) {
     this.draw = function(ctx) {
 		ctx.drawImage(img2, 700, 500);
 	}
-    var sonido = true;
-	var up = false;
-	var NuevaPieza;
+	
+    	var sonido = true;
+		var up = false;
+		var NuevaPieza;
+		
 	this.step = function(dt) {
+	
+	if (CurrentMove == 0 && getTurno().id.slice(0,10) == "Jugador_IA" && Meteor.userId() == Jugador1.id) {
+		Meteor.call('JugadorArtificial', idParty, getTurno().id, function (err, data) {
+			Partidas.update(idParty, {
+                            $push : {movimientos: {jugador: getTurno(), ficha: {x: data[2], y: data[3], sprite: data[0], rotation: data[1]*-90}, seguidor: 0, puntos: data[4]}}
+                          });
+			console.log(data, 'IAAAA');
+		
+			
+		}); 
+		CurrentMove = 2;
+	}
     if(Juego.keys['silenciar']){
     	sonido = !sonido;
    	}
@@ -632,7 +646,7 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 			if (init == false) {
 				$(idCanvas).mousedown(function(e){
 					console.log(e);
-	          	  	if (that.colocada == false ) {
+	          	  	if (that.colocada == false && CurrentMove == 1) {
 	         				
 						if ((e.pageX - e.currentTarget.offsetLeft) > that.x &&
 							 (e.pageY - e.currentTarget.offsetTop) > that.y &&
@@ -648,7 +662,7 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 		
 				$(idCanvas).mouseup(function(e){
        		 	 // cuando mueves. soltar ficha en una casilla
-                	if (that.colocada == false ) {
+                		if (that.colocada == false && CurrentMove == 1) {
 						that.x = Math.floor((e.pageX - e.currentTarget.offsetLeft)/100)* 100;
 						that.y = Math.floor((e.pageY- e.currentTarget.offsetTop)/100)* 100;
 					}
@@ -659,7 +673,7 @@ PiezaMapa = function (cx,cy, sprite,rotate) {
 				$(idCanvas).mousemove(function(e){
              
 					if(!mouseIsDown) return;
-   					if (that.colocada == false ) {
+   					if (that.colocada == false && CurrentMove == 1) {
 						that.x = (e.pageX - e.currentTarget.offsetLeft) - posicion_x;
 						that.y = (e.pageY - e.currentTarget.offsetTop) - posicion_y;
                 	}
@@ -756,7 +770,7 @@ Set = function (PiezaMapa) {
 			ctx.fillText("Colocar la pieza",350,160);
 			ctx.font="bold 20px Arial";
 			ctx.fillText("- Colocar sin seguidor",270,215);
-		
+			
 			ctx.fillText("- Colocar granjero",270,245);
 			ctx.fillText("- Colocar ladrón",270,275);
 			ctx.fillText("- Colocar caballero",270,305);
@@ -817,10 +831,12 @@ Set = function (PiezaMapa) {
 		if(!Juego.keys['back']) up6 = true;
 		if(up6 && Juego.keys['back']) {
 			up6 = false;
-			this.menu -= 1;
-			this.option = 0; 
-			this.optionx = 0;
-			this.optiony = 0; 
+			if (this.menu != 0) {
+				this.menu -= 1;
+				this.option = 0; 
+				this.optionx = 0;
+				this.optiony = 0; 
+			}
 		}
 		
 		if (this.menu == 0) {

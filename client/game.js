@@ -156,6 +156,7 @@ function SetFichaEn (NuevaPieza, Posiciones) {
 }
 
 
+LastData = undefined;
 
 function SetPlayers (err, data) {
 
@@ -188,6 +189,7 @@ function SetPlayers (err, data) {
 				Tablero.add(new Seguidor (u.movimientos[moves].seguidor.fx, u.movimientos[moves].seguidor.fy,u.movimientos[moves].seguidor.t,u.movimientos[moves].seguidor.sx,u.movimientos[moves].seguidor.sy));
 			}
 			setPoint (u.movimientos[moves].puntos);
+			LastData = u.movimientos[moves];
 		
 		}
 	
@@ -202,6 +204,11 @@ function SetPlayers (err, data) {
 		var last = Partidas.findOne({_id:idParty}).movimientos;
 		if (last != undefined) {
 			var ultimo = last.pop();
+			
+			if (ultimo == LastData) {
+				return;
+			}
+			LastData = ultimo;
 			if (ultimo.ficha != 0) {
 			NP = new PiezaMapa(ultimo.ficha.x,ultimo.ficha.y, ultimo.ficha.sprite,ultimo.ficha.rotation);
 			NP.colocada = true;
@@ -455,7 +462,11 @@ Ficha_abajo = function(cx,cy) {
     		if (CurrentMove == 0 && getTurno().id == Meteor.userId())  {
     			
     			Meteor.call("Robar", idParty, function(err, data) { 
-    				NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
+    					if (data == 0) {
+    						alert("Fin de partida");
+    						return;
+    					}
+    						NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
 			
 						//sonido_ladron.play();
 						//if (data[1].length != 0 || ) {
@@ -469,7 +480,7 @@ Ficha_abajo = function(cx,cy) {
 
 		} else if (CurrentMove == 1 && getTurno().id == Meteor.userId()) {
 			if (SetFichaEn(NuevaPieza, Posiciones)) {
-				Meteor.call("ColocarFicha", idParty, NuevaPieza.sprite, {x: NuevaPieza.x/100 + CurrentScroll.x, y: NuevaPieza.y/100 +CurrentScroll.y}, (NuevaPieza.rotation / -90), function(err, data) { 
+				Meteor.call("ColocarFicha", idParty, NuevaPieza.sprite, {x: NuevaPieza.x/100 + CurrentScroll.x, y: NuevaPieza.y/100 +CurrentScroll.y}, (NuevaPieza.rotation / -90), getTurno().id, function(err, data) { 
 					if (data != 0) {
     					Juego.setBoard(8,new Set(NuevaPieza));
 						CurrentMove = 2;

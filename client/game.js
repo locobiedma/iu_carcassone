@@ -199,6 +199,10 @@ function SetPlayers (err, data) {
 	
 	Deps.autorun(function(){
 		
+		if (Partidas.findOne({_id:idParty}).terminada){
+			CurrentMove = 3;
+			Game.setBoard(10, Blank);
+		}
 		
 		console.log (Partidas.findOne({_id:idParty}));
 		var last = Partidas.findOne({_id:idParty}).movimientos;

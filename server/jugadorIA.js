@@ -8,8 +8,8 @@ jugadorIA=function(nJugador){
           var robado=Tablero.robarFicha(); 
           this.nuevaficha = new ObjetoFicha(0,0,0,robado);
           Tablero.buscarCandidatos(this.nuevaficha);
-          if (nuevaficha.encajaCon.length==0 && Tablero.totalFichas != 71){ console.log("no encaja"); this.robar()}
-           else {console.log('encajaCon',this.nuevaficha.encajaCon)};
+          if (nuevaficha.encajaCon.length==0 && Tablero.totalFichas != 71){this.robar()}
+           //else {console.log('encajaCon',this.nuevaficha.encajaCon)};
           //71 porque ya hemos restado 1 al llamar a Tabler.robarFicha()
   };
   this.robar();
@@ -18,7 +18,7 @@ jugadorIA=function(nJugador){
   
   
   var colocarFicha =  function(ngiros){
-  
+       // console.log('colocar-giros',ngiros);
         TableroAux = new ObjTablero(12312);
         TableroAux.iniciar();
         // Salvamos la lista de huecos.
@@ -60,6 +60,7 @@ jugadorIA=function(nJugador){
                   coory:this.nuevaficha.encajaCon[cont].y,
                   giros:ngiros,
                 }
+               // console.log(this.nuevaficha,jugada);
             }
             
             
@@ -80,7 +81,7 @@ jugadorIA=function(nJugador){
   
   
   var jugador= _.find(Tablero.listaJugadores,function(obj){return (obj.numero==nJugador)});
-  console.log('puntos origen',jugador.puntos);
+ 
   
         
   //Buscamos de todas las jugadas posibles la que más puntos nos da. 
@@ -97,7 +98,7 @@ jugadorIA=function(nJugador){
   //Probaremos con todas las fichas de que encajan con la ficha. 
   for (cont in this.nuevaficha.encajaCon){
     
-    //Probaremos con las cuatro orientaciones posibles. 
+    /*/Probaremos con las cuatro orientaciones posibles. 
     for (var k=0;k<4;k++){
         if(k){
           for (var n=0; n<k; n++){
@@ -105,11 +106,30 @@ jugadorIA=function(nJugador){
           }    
         }    
         colocarFicha(k);
-    }
+    }*/
+    //console.log('0000000000',this.nuevaficha);
+    colocarFicha(0);
+     
+    this.nuevaficha.girar();
+    //console.log('1111111111',this.nuevaficha);
+    colocarFicha(1);  
+    
+    
+    
+    this.nuevaficha.girar();
+    this.nuevaficha.girar();
+    //console.log('2222222222222',this.nuevaficha);
+    colocarFicha(2);  
+    
+    this.nuevaficha.girar();
+    this.nuevaficha.girar();
+    this.nuevaficha.girar();
+    //console.log('3333333333333',this.nuevaficha);
+    colocarFicha(3);
   } 
 
-  
-  return [nuevaficha, jugada]
+ 
+  return [this.nuevaficha.tipo, jugada]
 
 
 }

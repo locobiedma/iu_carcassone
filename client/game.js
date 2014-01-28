@@ -203,6 +203,8 @@ function SetPlayers (err, data) {
 			CurrentMove = 3;
 			Game.setBoard(10, Blank);
 			sonidojuego.pause();
+			alert("Fin de partida.Gracias por Jugar!");
+			return;
 		}
 		
 		console.log (Partidas.findOne({_id:idParty}));
@@ -1092,6 +1094,16 @@ Blank = new function () {
 ClarcassonneGameIU = new function ()  {
 	
 	this.initialize = function (idCanvasElement, party_id) {
+		console.log(Meteor.userId());
+		var cnvs = document.getElementById(idCanvasElement.slice(1));
+		var cnvsctx = cnvs.getContext && cnvs.getContext('2d');
+		if(!cnvsctx) { return alert("Please upgrade your browser to play"); }
+		cnvsctx.save();
+		cnvsctx.fillRect(0,0,800,600);
+		cnvsctx.fillStyle="rgb(255,255,255)";
+		cnvsctx.font="bold 50px Arial";
+		cnvsctx.fillText("Loading...", 270,355);  
+		cnvsctx.restore();
 		console.log("Estoy siendo llamado IU");
 		Meteor.call("InicioJuego", party_id, SetPlayers);
 		idCanvas = idCanvasElement;

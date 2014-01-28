@@ -202,6 +202,7 @@ function SetPlayers (err, data) {
 		if (Partidas.findOne({_id:idParty}).terminada){
 			CurrentMove = 3;
 			Game.setBoard(10, Blank);
+			sonidojuego.pause();
 		}
 		
 		console.log (Partidas.findOne({_id:idParty}));
@@ -485,9 +486,12 @@ Ficha_abajo = function(cx,cy) {
     						return;
     					}
     						NuevaPieza = new PiezaMapa(CurrentScroll.x + 7,CurrentScroll.y + 5, data[0],0);
-			
-						//sonido_ladron.play();
-						//if (data[1].length != 0 || ) {
+						if(Juego.keys['silenciar']){
+    							sonar = !sonar;
+   						}
+        					if (sonar){
+							sonido_ficha.play();
+						}
 						Juego.setBoard(7, NuevaPieza);
 						CurrentMove = 1; 
 						Posiciones = data[1];
@@ -991,10 +995,13 @@ Set = function (PiezaMapa) {
 				sonido_granjero.pause();
 				return 'granjero_' + color;
 			} else if (this.option == 2){
+				sonido_ladron.pause();
 				return 'ladron_' + color;
 			} else if (this.option == 3){
+				sonido_caballero.pause();
 				return 'caballero_' + color;
 			} else if (this.option == 4){
+				sonido_monje.pause();
 				return 'cura_' + color;
 			}
 		}

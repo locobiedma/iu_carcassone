@@ -733,7 +733,9 @@ Seguidor = function (cx,cy, sprite, posx, posy) {
 	this.type = 'Seguidor';
 	
 	this.draw = function (ctx) {
-		SpriteSh.draw(ctx,this.sprite,this.x + this.posx,this.y + this.posy,1,0,0.5);
+		if (this.y < 500 && this.y >= 0 && this.x >= 0 && this.x < 800) {
+			SpriteSh.draw(ctx,this.sprite,this.x + this.posx,this.y + this.posy,1,0,0.5);
+		}
 	}
 	
 	this.step = function () {
